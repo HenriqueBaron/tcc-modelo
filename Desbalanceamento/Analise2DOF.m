@@ -1,17 +1,20 @@
-% Calcula a vibração de um sistema eixo-rotor desbalanceado analisando um
-% ponto com 2 graus de liberdade.
+% Calcula a vibração de um sistema eixo-rotor desbalanceado analisando um ponto com 2 graus de liberdade.
 
-t0 = 0;         % Instante inicial
-tf = 0.5;       % Instante final
-dt = 0.0005;    % Resolução do tempo
-m = 1.565;      % Massa total do rotor
-e = 10e-3;      % Afastamento do centro de massa do rotor
-c_i = 0;        % Amortecimento interno do eixo
-c = 0;          % Amortecimento externo do sistema
-d_eixo = 0.02;  % Diâmetro do eixo
-L_eixo = 0.4;   % Comprimento do eixo
-E = 200e9;      % Módulo de elasticidade do aço
-N = 1800;       % Velocidade de rotação, em revoluções por minuto
+clearvars;
+t0 = 0; % Instante inicial
+tf = 0.05; % Instante final
+dt = 0.001; % Resolução do tempo
+m = 1.565; % Massa total do rotor
+e = 10e-3; % Afastamento do centro de massa do rotor
+c_i = 0.2; % Amortecimento interno do eixo
+c = 0; % Amortecimento externo do sistema
+d_eixo = 0.02; % Diâmetro do eixo
+L_eixo = 0.4; % Comprimento do eixo
+E = 200e9; % Módulo de elasticidade do aço
+N = 1800; % Velocidade de rotação, em revoluções por minuto
+
+% Vetor tempo
+t_vals = t0:dt:tf;
 
 % Rigidez do eixo
 A = pi*d_eixo^2/4; % Seção transversal do eixo
@@ -39,4 +42,14 @@ cond3 = y(0) == 0;
 cond4 = dy(0) == 0;
 conds = [cond1 cond2 cond3 cond4];
 
-[sol_x(t) sol_y(t)] = dsolve(f_total,conds);
+[sol_x(t), sol_y(t)] = dsolve(f_total,conds);
+sol_x = simplify(sol_x);
+sol_y = simplify(sol_y);
+
+% figure(1)
+% grid on;
+% plot(t_vals,sol_x(t_vals));
+% 
+% figure(2)
+% grid on;
+% plot(t_vals,sol_y(t_vals));
