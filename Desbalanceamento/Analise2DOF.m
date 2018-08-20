@@ -12,9 +12,12 @@ L_eixo = 0.4; % Comprimento do eixo
 E = 200e9; % Módulo de elasticidade do aço
 N = 1800; % Velocidade de rotação, em revoluções por minuto
 
-% Rigidez do eixo
-A = pi*d_eixo^2/4; % Seção transversal do eixo
-k = A*E/L_eixo;
+% Função de rigidez do eixo. Determinada pelo segundo momento de área da
+% seção circular e pela função de deflexão de mecânica dos sólidos.
+% Considera que o rotor está posicionado no centro do eixo
+obterRigidez = @(I,l) 48*E*I/l.^3;
+I_eixo = pi*d_eixo^4/64;
+k = obterRigidez(I_eixo,L_eixo);
 
 % Velocidade angular
 omega = N*pi/30;
