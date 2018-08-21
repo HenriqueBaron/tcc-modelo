@@ -5,7 +5,7 @@ t0 = 0; % Instante inicial
 tf = 0.1; % Instante final
 m = 1.565; % Massa total do rotor
 e = 10e-3; % Afastamento do centro de massa do rotor
-c_i = 0.1; % Amortecimento interno do eixo
+gamma = 0.002; % Coeficiente de amortecimento interno
 c = 0; % Amortecimento externo do sistema
 d_eixo = 0.02; % Diâmetro do eixo
 L_eixo = 0.4; % Comprimento do eixo
@@ -19,10 +19,13 @@ obterRigidez = @(I,l) 48*E*I/l.^3;
 I_eixo = pi*d_eixo^4/64;
 k = obterRigidez(I_eixo,L_eixo);
 
-% Velocidade angular
-omega = N*pi/30;
+omega = N*pi/30; % Frequência angular
+omega_n = sqrt(k/m); % Frequência natural
 
+% Determinação do amortecimento interno
+c_i = gamma/abs(omega-omega_n)*k;
 
+% Equações diferenciais de movimento
 eqs = @(t,y) [y(2);
     omega^2*e*cos(omega*t) - (c_i+c)/m*y(2) - k/m*y(1) + c_i*omega/m*y(3);
     y(4);
