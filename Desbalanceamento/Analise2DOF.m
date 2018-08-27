@@ -60,6 +60,15 @@ axis 'auto y'
 
 figure(3)
 clf
+title('Órbita, início')
+grid on
+hold on
+iinf = 1;
+isup = 100;
+plot(y(iinf:isup,1),y(iinf:isup,3))
+
+figure(4)
+clf
 title('Órbita, final')
 grid on
 hold on
