@@ -33,10 +33,9 @@ eqs = @(t,y) [y(2);
 
 [t,y] = ode45(eqs,[t0 tf], [0; 0; 0; 0]);
 
-figure(1)
+figure
+title('Deslocamentos')
 grid on;
+hold on;
 plot(t,y(:,1));
-
-figure(2)
-grid on;
 plot(t,y(:,3));
