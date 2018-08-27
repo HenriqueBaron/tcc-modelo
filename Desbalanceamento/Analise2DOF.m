@@ -2,7 +2,7 @@
 
 clearvars;
 t0 = 0; % Instante inicial
-tf = 0.1; % Instante final
+tf = 5; % Instante final
 m = 1.565; % Massa total do rotor
 e = 10e-3; % Afastamento do centro de massa do rotor
 gamma = 0.002; % Coeficiente de amortecimento interno
@@ -33,9 +33,36 @@ eqs = @(t,y) [y(2);
 
 [t,y] = ode45(eqs,[t0 tf], [0; 0; 0; 0]);
 
-figure
-title('Deslocamentos')
+di = length(t)/(tf-t0);
+
+% Exibição
+figure(1)
+clf
+title('Deslocamentos, início')
 grid on;
 hold on;
 plot(t,y(:,1));
 plot(t,y(:,3));
+legend('Direção x','Direção y');
+xlim([t0 t0+0.1])
+axis 'auto y'
+
+figure(2)
+clf
+title('Deslocamentos, final')
+grid on;
+hold on;
+plot(t,y(:,1));
+plot(t,y(:,3));
+legend('Direção x','Direção y');
+xlim([tf-0.1 tf])
+axis 'auto y'
+
+figure(3)
+clf
+title('Órbita, final')
+grid on
+hold on
+iinf = length(y) - 1000;
+isup = length(y);
+plot(y(iinf:isup,1),y(iinf:isup,3))
