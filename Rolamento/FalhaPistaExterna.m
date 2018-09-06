@@ -2,10 +2,14 @@
 
 clearvars;
 
-% Entrada de dados
+%----- Entrada de dados -----%
 t0 = 0; % Instante inicial
 tf = 5; % Instante final
 N = 1800; % Velocidade de rotação, em revoluções por minuto
+
+% Propriedades do carregamento
+Cmax = 100; % Carga máxima aplicada no eixo, newtons
+psi_m = pi/3; % Ângulo máximo de distribuição do carregamento, radianos
 
 % Dados do rolamento - 6004 2RSH
 D = 42; % Diâmetro externo da pista externa, milímetros
@@ -13,7 +17,14 @@ d = 20; % Diâmetro interno da pista interna, milímetros
 D2 = 37.19; % Diâmetro interno da pista externa, milímetros
 d2 = 24.65; % Diâmetro externo da pista interna, milímetros
 Nb = 13; % Número de esferas
-alpha = 0; % Ângulo de contato das esferas
+alpha = 0; % Ângulo de contato do rolamento
+rolos = 0; % Rolamento de esferas = 0; rolamento de rolos = 1
+
+% Propriedades do defeito
+d_def = 0.1; % Tamanho do defeito, milímetros
+da = 0; % Deslocamento axial provocado pelo defeito, milímetros
+dr = 1; % Deslocamento radial provocado pelo defeito, milímetros
+
 %------------------------------------------------------------------------%
 
 % Propriedades derivadas do rolamento
@@ -35,3 +46,6 @@ BPFO = Nb/2*(omega_i-omega_o)*(1-cos(alpha)*Db/Dp);
 BPFI = Nb/2*(omega_i-omega_o)*(1+cos(alpha)*Db/Dp);
 % Ball Spin Frequency
 BSF = Dp/(2*Db)*(omega_i-omega_o)*(1-cos(alpha)^2*Db^2/Dp^2);
+
+% Determinação do carregamento estático
+epsilon = 1/2*(1+tan(alpha)*da/dr);
