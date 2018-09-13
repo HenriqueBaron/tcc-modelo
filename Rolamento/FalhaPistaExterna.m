@@ -63,3 +63,13 @@ BSF = Dp/(2*Db)*(omega_i-omega_o)*(1-cos(alpha)^2*Db^2/Dp^2);
 
 % Determinacao do carregamento estatico
 epsilon = 1/2*(1+tan(alpha)*da/dr);
+
+% Frequencias naturais - aneis externo e interno
+n = 2; % Modo de vibracao considerado
+freq_natural = @(n,E,I,mu,R) n*(n^2-1)/sqrt(1+n^2)*sqrt(E*I/(mu*R^4));
+omega_n_or = freq_natural(2,E,I_or,mu_or,R_or);
+omega_n_ir = freq_natural(2,E,I_ir,mu_ir,R_ir);
+
+% Rigidezes anel externo e interno
+k_or = m_or*omega_n_or^2;
+k_ir = m_ir*omega_n_ir^2;
