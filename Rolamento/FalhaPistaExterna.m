@@ -12,13 +12,29 @@ D = 42; % Diametro externo da pista externa, milimetros
 d = 20; % Diametro interno da pista interna, milimetros
 D2 = 37.19; % Diametro interno da pista externa, milimetros
 d2 = 24.65; % Diametro externo da pista interna, milimetros
-Nb = 13; % Numero de esferas
+Db = 6.35; % Diametro das esferas, milimetros
+Nb = 9; % Numero de esferas
 alpha = 0; % Angulo de contato do rolamento
+c_r = 12.5e-3; % Folga radial (radial clearance), milimetros
+E = 200e3; % Modulo de elasticidade do aco dos aneis, MPa
 rolos = 0; % Rolamento de esferas = 0; rolamento de rolos = 1
+
+% Propriedades do anel externo do rolamento
+m_or = 0.035; % Massa, kg
+I_or = 31.802; % Momento de inercia, mm^4
+R_or = 19.43; % Raio da linha neutra, mm
+mu_or = 0.289e-3; % Massa linear, kg/mm
+
+% Propriedades do anel interno do rolamento
+m_ir = 0.022; % Massa, kg
+I_ir = 37.424; % Momento de inercia anel interno, mm^4
+R_ir = 11.65; % Raio da linha neutra, mm
+mu_ir = 0.301e-3; % Massa linear, kg/mm
 
 % Propriedades do defeito e carregamento
 Cmax = 100; % Carga maxima aplicada no eixo, newtons
 psi_m = pi/3; % Angulo maximo de distribuicao do carregamento, radianos
+theta = 0; % Angulo entre a carga e o defeito na pista externa
 d_def = 0.1; % Tamanho do defeito, milimetros
 da = 0; % Deslocamento axial provocado pelo defeito, milimetros
 dr = 1; % Deslocamento radial provocado pelo defeito, milimetros
@@ -26,8 +42,8 @@ dr = 1; % Deslocamento radial provocado pelo defeito, milimetros
 %------------------------------------------------------------------------%
 
 % Propriedades derivadas do rolamento
+c_d = 2*c_r; % Folga diametral (diametral clearance), milimetros
 Dp = (D + d)/2; % Pitch diameter, milimetros
-Db = (D2 - d2)/2; % Diâmetro das esferas
 
 % Velocidades angulares dos aneis interno e externo
 % Como os rolamentos são embutidos no mancal, a velocidade angular do
