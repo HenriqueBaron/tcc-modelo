@@ -1,8 +1,16 @@
 function [ wz_max ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, F, epsilon, R, k)
-%ObterCargaMaximaEsfera Determina a carga na esfera mais solicitada do
-%rolamento
+%ObterCargaMaximaEsfera Determina a carga maxima de esfera do rolamento
 %   Realiza um processo iterativo para determinar a carga na esfera mais
 %   carregada do rolamento.
+%
+%   PARAMETROS DE ENTRADA
+%   wz - Carga radial, N
+%   n - Numero de esferas
+%   cd - Folga diametral, mm
+%   Eef - Modulo de elasticidade efetivo, MPa
+%   F, epsilon - Resultados integrais elipticas, pistas interna e externa
+%   R - Raios equivalentes, pistas interna e externa
+%   k - Parametros de elipticidade, pistas interna e externa
 
 delta = zeros(2,1);
 Zw = 5;
