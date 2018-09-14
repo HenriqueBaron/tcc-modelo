@@ -16,7 +16,10 @@ Db = 6.35; % Diametro das esferas, milimetros
 Nb = 9; % Numero de esferas
 alpha = 0; % Angulo de contato do rolamento
 c_r = 12.5e-3; % Folga radial (radial clearance), milimetros
-E = 200e3; % Modulo de elasticidade do aco dos aneis, MPa
+E = 200e3; % Modulo de elasticidade do aco dos aneis e esferas, MPa
+ni = 0.3; % Coeficiente de Poisson para aneis e esferas
+eta = 0.04; % Visosidade absoluta do lubrificante, N*s/m^2
+ksi = 2.3e-8; % Coeficiente de visosidade-pressao, m^2/N
 rolos = 0; % Rolamento de esferas = 0; rolamento de rolos = 1
 
 % Propriedades do anel externo do rolamento
@@ -24,12 +27,14 @@ m_or = 0.035; % Massa, kg
 I_or = 31.802; % Momento de inercia, mm^4
 R_or = 19.43; % Raio da linha neutra, mm
 mu_or = 0.289e-3; % Massa linear, kg/mm
+rGroove_or = 3.18; % Raio da calha (groove), mm
 
 % Propriedades do anel interno do rolamento
 m_ir = 0.022; % Massa, kg
 I_ir = 37.424; % Momento de inercia anel interno, mm^4
 R_ir = 11.65; % Raio da linha neutra, mm
 mu_ir = 0.301e-3; % Massa linear, kg/mm
+rGroove_ir = 3.18; % Raio da calha (groove), mm
 
 % Propriedades do defeito e carregamento
 Cmax = 100; % Carga maxima aplicada no eixo, newtons
@@ -73,3 +78,7 @@ omega_n_ir = freq_natural(2,E,I_ir,mu_ir,R_ir);
 % Rigidezes anel externo e interno
 k_or = m_or*omega_n_or^2;
 k_ir = m_ir*omega_n_ir^2;
+
+% Espessura do filme de lubrificacao
+h = EspessuraFilmeLubrificacao(Dp,c_d,Db,Nb,[rGroove_ir rGroove_or], ...
+alpha,Cmax,[omega_i omega_o],eta,ksi,E,ni);
