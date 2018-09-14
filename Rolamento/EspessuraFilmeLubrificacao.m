@@ -53,4 +53,22 @@ Fo = pi/2 + qa*log(alpha_ro);
 % Modulo de elasticidade efetivo
 Eef = E/(1-ni^2);
 
+% Carga na esfera mais solicitada
+wz_max = ObterCargaMaximaEsfera(wz,n,cd,Eef,[Fi Fo],[epsilon_i epsilon_o],[Ri Ro],[ki ko]);
+
+% Velocidade de escoamento
+u = abs(omega_o-omega_i)*(de^2-d^2)/(4000*de);
+
+% Parametros adimensionais de velocidade, material e carga das pistas
+Ui = eta*u/(Eef*10^6*Rxi/1000);
+Gi = ksi*Eef*10^6;
+Wi = wz_max/(Eef*10^6*(Rxi/1000)^2);
+
+Uo = eta*u/(Eef*10^6*Rxo/1000);
+Go = Gi;
+Wo = wz_max/(Eef*10^6*(Rxo/1000)^2);
+
+hi = 3.63*Ui^0.68 * Gi^0.49 * Wi^-0.073 * (1-exp(-0.68*ki)) * Rxi;
+ho = 3.63*Uo^0.68 * Go^0.49 * Wo^-0.073 * (1-exp(-0.68*ko)) * Rxo;
+
 %end
