@@ -16,13 +16,13 @@ delta = zeros(2,1);
 Zw = 5;
 razaoComp = 0;
 erroRel = 1; % Erro relativo do processo iterativo
-while erroRel > 0.001
+while erroRel > 1e-5
     razaoCompAnt = razaoComp;
     wz_max = Zw*wz/n;
     
     % Compressoes locais elasticas maximas
     for i=1:2
-        delta(i) = F(i)*(n/(2*epsilon(i)*R(i))*(wz_max/(pi*k(i)*Eef))^2)^(1/3);
+        delta(i) = F(i)*(9/(2*epsilon(i)*R(i))*(wz_max/(pi*k(i)*Eef))^2)^(1/3);
     end
     deltaSum = sum(delta);
     
