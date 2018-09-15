@@ -37,7 +37,7 @@ mu_ir = 0.301e-3; % Massa linear, kg/mm
 rGroove_ir = 3.18; % Raio da calha (groove), mm
 
 % Propriedades do defeito e carregamento
-Cmax = 100; % Carga maxima aplicada no eixo, newtons
+Cmax = 450; % Carga maxima aplicada no eixo, newtons
 psi_m = pi/3; % Angulo maximo de distribuicao do carregamento, radianos
 theta = 0; % Angulo entre a carga e o defeito na pista externa
 d_def = 0.1; % Tamanho do defeito, milimetros
