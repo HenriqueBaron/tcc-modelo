@@ -71,9 +71,9 @@ epsilon = 1/2*(1+tan(alpha)*da/dr);
 
 % Frequencias naturais - aneis externo e interno
 n = 2; % Modo de vibracao considerado
-freq_natural = @(n,E,I,mu,R) n*(n^2-1)/sqrt(1+n^2)*sqrt(E*I/(mu*R^4));
-omega_n_or = freq_natural(2,E,I_or,mu_or,R_or);
-omega_n_ir = freq_natural(2,E,I_ir,mu_ir,R_ir);
+FreqNatural = @(n,E,I,mu,R) n*(n^2-1)/sqrt(1+n^2)*sqrt(E*I/(mu*R^4));
+omega_n_or = FreqNatural(2,E,I_or,mu_or,R_or);
+omega_n_ir = FreqNatural(2,E,I_ir,mu_ir,R_ir);
 
 % Rigidezes anel externo e interno
 k_or = m_or*omega_n_or^2;
@@ -82,3 +82,9 @@ k_ir = m_ir*omega_n_ir^2;
 % Espessura do filme de lubrificacao
 h = EspessuraFilmeLubrificacao(Dp,c_d,Db,Nb,[rGroove_ir rGroove_or], ...
 alpha,Cmax,[omega_i omega_o],eta,ksi,E,ni);
+
+% Determinação de propriedades da camada de lubrificante
+EccRatio = @(h,c) 1-h/c;
+TanPhi = @(ecr) pi*sqrt(1-ecr^2)/(4*ecr);
+ConstCarga = @(ecr) inv((TanPhi(ecr))^2+1)*(1-ecr^2)^2/...
+    (ecr*sqrt(16*ecr^2+pi^2*(1-ecr^2)));
