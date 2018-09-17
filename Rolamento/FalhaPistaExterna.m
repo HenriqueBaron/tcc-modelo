@@ -14,6 +14,7 @@ D2 = 37.19; % Diametro interno da pista externa, milimetros
 d2 = 24.65; % Diametro externo da pista interna, milimetros
 Db = 6.35; % Diametro das esferas, milimetros
 Nb = 9; % Numero de esferas
+m_b = 1.05e-3; % Massa de cada esfera, kg
 alpha = 0; % Angulo de contato do rolamento
 c_r = 12.5e-3; % Folga radial (radial clearance), milimetros
 E = 200e3; % Modulo de elasticidade do aco dos aneis e esferas, MPa
