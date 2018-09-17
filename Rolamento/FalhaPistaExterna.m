@@ -97,3 +97,13 @@ KLub = @(cCarga,tanPhi,ecr) cCarga*(SinPhi(tanPhi)^2*ecr/(1-ecr^2)^2 ...
 CLub = @(cCarga,tanPhi,ecr) cCarga*(SinPhi(tanPhi)^2*pi/ ...
     (2*(1-ecr^2)^(3/2)) + SinPhi(tanPhi)*CosPhi(tanPhi)*4*ecr/ ...
     (1-ecr^2)^2 + CosPhi(tanPhi)^2*pi*(1+2*ecr^2)/(2*(1-ecr^2)^(5/2)));
+
+% Determincacao das propriedades das camadas de lubrificante
+[eccRatio,tanPhi,cCarga,k_f,c_f] = deal(zeros(2,1));
+for i=1:2
+    eccRatio(i) = EccRatio(h(i),c_d);
+    tanPhi(i) = TanPhi(eccRatio(i));
+    cCarga(i) = ConstCarga(eccRatio(i),tanPhi(i));
+    k_f(i) = KLub(cCarga(i),tanPhi(i),eccRatio(i));
+    c_f(i) = CLub(cCarga(i),tanPhi(i),eccRatio(i));
+end
