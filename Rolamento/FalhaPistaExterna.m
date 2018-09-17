@@ -86,5 +86,5 @@ alpha,Cmax,[omega_i omega_o],eta,ksi,E,ni);
 % Determinação de propriedades da camada de lubrificante
 EccRatio = @(h,c) 1-h/c;
 TanPhi = @(ecr) pi*sqrt(1-ecr^2)/(4*ecr);
-ConstCarga = @(ecr) inv((TanPhi(ecr))^2+1)*(1-ecr^2)^2/...
+ConstCarga = @(ecr) 1/((TanPhi(ecr))^2+1)*(1-ecr^2)^2/...
     (ecr*sqrt(16*ecr^2+pi^2*(1-ecr^2)));

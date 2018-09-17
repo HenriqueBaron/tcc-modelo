@@ -35,7 +35,7 @@ for i=1:2
     Rr(i) = r(i)/d; % Race conformity
     % Raios equivalentes
     Ry(i) = Rr(i)*d/(2*Rr(i)-1);
-    R(i) = inv(inv(Rx(i))+inv(Ry(i)));
+    R(i) = 1/(1/(Rx(i))+1/(Ry(i)));
     alpha_r(i) = Ry(i)/Rx(i);
     
     k(i) = alpha_r(i)^(2/pi); % Condicoes de elipticidade
