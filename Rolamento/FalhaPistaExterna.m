@@ -19,8 +19,6 @@ alpha = 0; % Angulo de contato do rolamento
 c_r = 12.5e-3; % Folga radial (radial clearance), milimetros
 E = 200e3; % Modulo de elasticidade do aco dos aneis e esferas, MPa
 ni = 0.3; % Coeficiente de Poisson para aneis e esferas
-eta = 0.04; % Visosidade absoluta do lubrificante, N*s/m^2
-ksi = 2.3e-8; % Coeficiente de visosidade-pressao, m^2/N
 rolos = 0; % Rolamento de esferas = 0; rolamento de rolos = 1
 
 % Propriedades do anel externo do rolamento
@@ -33,9 +31,14 @@ rGroove_or = 3.18; % Raio da calha (groove), mm
 % Propriedades do anel interno do rolamento
 m_ir = 0.022; % Massa, kg
 I_ir = 37.424; % Momento de inercia anel interno, mm^4
-R_ir = 11.65; % Raio da linha neutra, mm
+Rn_ir = 11.65; % Raio da linha neutra, mm
+Rx_ir = 12.32; % Raio de curvatura, mm
 mu_ir = 0.301e-3; % Massa linear, kg/mm
 rGroove_ir = 3.18; % Raio da calha (groove), mm
+
+% Propriedades do lubrificante - ISO VG 32 @ 40°C
+visc = 32e-6; % Viscosidade cinemática, m^2/s (1 m^2/s = 10^6 centistokes)
+rho = 861; % Massa específica, kg/m^3
 
 % Propriedades do defeito e carregamento
 Cmax = 450; % Carga maxima aplicada no eixo, newtons
@@ -74,7 +77,7 @@ epsilon = 1/2*(1+tan(alpha)*da/dr);
 n = 2; % Modo de vibracao considerado
 FreqNatural = @(n,E,I,mu,R) n*(n^2-1)/sqrt(1+n^2)*sqrt(E*I/(mu*R^4));
 omega_n_or = FreqNatural(2,E,I_or,mu_or,R_or);
-omega_n_ir = FreqNatural(2,E,I_ir,mu_ir,R_ir);
+omega_n_ir = FreqNatural(2,E,I_ir,mu_ir,Rn_ir);
 
 % Rigidezes anel externo e interno
 k_or = m_or*omega_n_or^2;
