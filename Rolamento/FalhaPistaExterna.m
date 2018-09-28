@@ -79,31 +79,3 @@ omega_n_ir = FreqNatural(2,E,I_ir,mu_ir,R_ir);
 % Rigidezes anel externo e interno
 k_or = m_or*omega_n_or^2;
 k_ir = m_ir*omega_n_ir^2;
-
-% Espessura do filme de lubrificacao
-h = EspessuraFilmeLubrificacao(Dp,c_d,Db,Nb,[rGroove_ir rGroove_or], ...
-alpha,Cmax,[omega_i omega_o],eta,ksi,E,ni);
-
-% Funcoes para propriedades da camada de lubrificante
-EccRatio = @(h,c) 1-h/c;
-TanPhi = @(ecr) pi*sqrt(1-ecr^2)/(4*ecr);
-SinPhi = @(tanPhi) sqrt(1/(tanPhi^-2+1));
-CosPhi = @(tanPhi) sqrt(1/(tanPhi^2+1));
-ConstCarga = @(ecr,tanPhi) (CosPhi(tanPhi))^2*(1-ecr^2)^2/...
-    (ecr*sqrt(16*ecr^2+pi^2*(1-ecr^2)));
-KLub = @(cCarga,tanPhi,ecr) cCarga*(SinPhi(tanPhi)^2*ecr/(1-ecr^2)^2 ...
-    + SinPhi(tanPhi)*CosPhi(tanPhi)*3*pi*ecr^2/(4*(1-ecr^2)^(5/2)) ...
-    + CosPhi(tanPhi)^2*2*ecr*(1+ecr^2)/(1-ecr^2)^3);
-CLub = @(cCarga,tanPhi,ecr) cCarga*(SinPhi(tanPhi)^2*pi/ ...
-    (2*(1-ecr^2)^(3/2)) + SinPhi(tanPhi)*CosPhi(tanPhi)*4*ecr/ ...
-    (1-ecr^2)^2 + CosPhi(tanPhi)^2*pi*(1+2*ecr^2)/(2*(1-ecr^2)^(5/2)));
-
-% Determincacao das propriedades das camadas de lubrificante
-[eccRatio,tanPhi,cCarga,k_f,c_f] = deal(zeros(2,1));
-for i=1:2
-    eccRatio(i) = EccRatio(h(i),c_d);
-    tanPhi(i) = TanPhi(eccRatio(i));
-    cCarga(i) = ConstCarga(eccRatio(i),tanPhi(i));
-    k_f(i) = KLub(cCarga(i),tanPhi(i),eccRatio(i));
-    c_f(i) = CLub(cCarga(i),tanPhi(i),eccRatio(i));
-end
