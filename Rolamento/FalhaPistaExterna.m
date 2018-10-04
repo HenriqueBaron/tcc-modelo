@@ -25,6 +25,7 @@ rolos = 0; % Rolamento de esferas = 0; rolamento de rolos = 1
 m_or = 0.035; % Massa, kg
 I_or = 31.802; % Momento de inercia, mm^4
 R_or = 19.43; % Raio da linha neutra, mm
+Rx_or = 18.68; % Raio de curvatura, mm
 mu_or = 0.289e-3; % Massa linear, kg/mm
 rGroove_or = 3.18; % Raio da calha (groove), mm
 
