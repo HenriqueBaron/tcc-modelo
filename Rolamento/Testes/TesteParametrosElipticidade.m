@@ -3,6 +3,8 @@
 % IE.
 % Procedimento de teste aplicado com os dados do anel EXTERNO.
 
+clearvars;
+
 rax = 3.175e-3; % Raio de curvatura da esfera (eixo x), m
 ray = 3.175e-3; % Raio de curvatura da esfera (eixo y), m
 
@@ -21,6 +23,7 @@ fun = @(phi,k) 1-(1/k^2)*sin(phi).^2;
 k = 2; % Um valor inicial para k é arbitrado
 k_ant = 0;
 
+i = 0;
 while abs(k-k_ant)>=1e-7
 k_ant = k;
 % Calcula-se as integrais elípticas
@@ -28,4 +31,12 @@ IF = integral(@(phi)fun(phi,k).^(-1/2),0,pi/2);
 IE = integral(@(phi)fun(phi,k).^(1/2),0,pi/2);
 
 k = ((2*IF-IE*(1+Rd))/(IE*(1-Rd)))^(1/2); % Determina um novo valor para k
+
+i = i+1;
 end
+
+disp(['Processo concluído em ',num2str(i),' iterações.']);
+res.IF = IF;
+res.IE = IE;
+res.k = k;
+disp(res);
