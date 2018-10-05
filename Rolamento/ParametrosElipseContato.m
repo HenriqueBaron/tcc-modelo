@@ -1,18 +1,9 @@
-function [IF,IE,k] = ParametrosElipseContato(rax,ray,rbx,rby)
-%ParametrosElipseContato Integrais elípticas e fator de elipticidade
+function [IF,IE,k] = ParametrosElipseContato(Rd)
+%PARAMETROSELIPSECONTATO Integrais elípticas e fator de elipticidade
 %   Determina o valor das integrais elípticas e do fator de elipticidade em
 %   um contato entre duas superfícies não-planas.
 %   Parâmetros de entrada:
-%   rax - Raio de curvatura da superfície A, direção X
-%   ray - Raio de curvatura da superfície A, direção Y
-%   rbx - Raio de curvatura da superfície B, direção X
-%   rby - Raio de curvatura da superfície B, direção Y
-Rx = 1/(1/rax + 1/rbx); % Raio de curvatura equivalente, eixo x
-Ry = 1/(1/ray + 1/rby); % Raio de curvatura equivalente, eixo y
-
-R = 1/(1/Rx + 1/Ry); % Soma de curvatura
-Rd = R*(1/Rx - 1/Ry); % Diferença de curvatura
-
+%   Rd - Diferença de curvatura entre as duas superfícies em contato.
 fun = @(phi,k) 1-(1/k^2)*sin(phi).^2;
 
 % Início do método iterativo
