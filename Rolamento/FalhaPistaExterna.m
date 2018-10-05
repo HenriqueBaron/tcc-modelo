@@ -22,24 +22,24 @@ ni = 0.3; % Coeficiente de Poisson para aneis e esferas
 rolos = 0; % Rolamento de esferas = 0; rolamento de rolos = 1
 
 % Propriedades do anel externo do rolamento
-m_or = 0.035; % Massa, kg
-I_or = 31.802; % Momento de inercia, mm^4
-R_or = 19.43; % Raio da linha neutra, mm
-Rx_or = 18.68; % Raio de curvatura, mm
-mu_or = 0.289e-3; % Massa linear, kg/mm
-rGroove_or = 3.18; % Raio da calha (groove), mm
+anelExt.m = 0.035; % Massa, kg
+anelExt.mu = 0.289e-3; % Massa linear, kg/mm
+anelExt.I = 31.802; % Momento de inercia, mm^4
+anelExt.Rneu = 19.43; % Raio da linha neutra, mm
+anelExt.rx = 18.68; % Raio de curvatura no eixo X, mm
+anelExt.ry = 3.18; % Raio de curvatura no eixo Y (groove), mm
 
 % Propriedades do anel interno do rolamento
-m_ir = 0.022; % Massa, kg
-I_ir = 37.424; % Momento de inercia anel interno, mm^4
-Rn_ir = 11.65; % Raio da linha neutra, mm
-Rx_ir = 12.32; % Raio de curvatura, mm
-mu_ir = 0.301e-3; % Massa linear, kg/mm
-rGroove_ir = 3.18; % Raio da calha (groove), mm
+anelInt.m = 0.022; % Massa, kg
+anelInt.mu = 0.301e-3; % Massa linear, kg/mm
+anelInt.I = 37.424; % Momento de inercia, mm^4
+anelInt.Rneu = 11.65; % Raio da linha neutra, mm
+anelInt.rx = 12.32; % Raio de curvatura no eixo X, mm
+anelInt.ry = 3.18; % Raio de curvatura no eixo Y (groove), mm
 
 % Propriedades do lubrificante - ISO VG 32 @ 40°C
-visc = 32e-6; % Viscosidade cinemática, m^2/s (1 m^2/s = 10^6 centistokes)
-rho = 861; % Massa específica, kg/m^3
+visc = 32e-6; % Viscosidade cinemática, anelExt.m^2/s (1 anelExt.m^2/s = 10^6 centistokes)
+rho = 861; % Massa específica, kg/anelExt.m^3
 
 % Propriedades do defeito e carregamento
 Cmax = 450; % Carga maxima aplicada no eixo, newtons
@@ -58,18 +58,19 @@ Dp = (D + d)/2; % Pitch diameter, milimetros
 % Velocidades angulares dos aneis interno e externo
 % Como os rolamentos são embutidos no mancal, a velocidade angular do
 % anel externo e sempre nula.
-omega_i = N*pi/30; % Anel interno
-omega_o = 0; % Anel externo
+anelInt.omega = N*pi/30;
+anelExt.omega = 0;
 
 % Frequencias principais do rolamento
 % Fundamental Train Frequency
-FTF = 0.5*(omega_i*(1-cos(alpha)*Db/Dp) + omega_o*(1+cos(alpha)*Db/Dp));
+FTF = 0.5*(anelInt.omega*(1-cos(alpha)*Db/Dp) + ...
+        anelExt.omega*(1+cos(alpha)*Db/Dp));
 % Ball Pass Frequency, Outer
-BPFO = Nb/2*(omega_i-omega_o)*(1-cos(alpha)*Db/Dp);
+BPFO = Nb/2*(anelInt.omega-anelExt.omega)*(1-cos(alpha)*Db/Dp);
 % Ball Pass Frequency, Inner
-BPFI = Nb/2*(omega_i-omega_o)*(1+cos(alpha)*Db/Dp);
+BPFI = Nb/2*(anelInt.omega-anelExt.omega)*(1+cos(alpha)*Db/Dp);
 % Ball Spin Frequency
-BSF = Dp/(2*Db)*(omega_i-omega_o)*(1-cos(alpha)^2*Db^2/Dp^2);
+BSF = Dp/(2*Db)*(anelInt.omega-anelExt.omega)*(1-cos(alpha)^2*Db^2/Dp^2);
 
 % Determinacao do carregamento estatico
 epsilon = 1/2*(1+tan(alpha)*da/dr);
@@ -77,9 +78,9 @@ epsilon = 1/2*(1+tan(alpha)*da/dr);
 % Frequencias naturais - aneis externo e interno
 n = 2; % Modo de vibracao considerado
 FreqNatural = @(n,E,I,mu,R) n*(n^2-1)/sqrt(1+n^2)*sqrt(E*I/(mu*R^4));
-omega_n_or = FreqNatural(2,E,I_or,mu_or,R_or);
-omega_n_ir = FreqNatural(2,E,I_ir,mu_ir,Rn_ir);
+anelExt.omega_n = FreqNatural(2,E,anelExt.I,anelExt.mu,anelExt.Rneu);
+anelInt.omega_n = FreqNatural(2,E,anelInt.I,anelInt.mu,anelInt.Rneu);
 
 % Rigidezes anel externo e interno
-k_or = m_or*omega_n_or^2;
-k_ir = m_ir*omega_n_ir^2;
+anelExt.k = anelExt.m*anelExt.omega_n^2;
+anelInt.k = anelInt.m*anelInt.omega_n^2;
