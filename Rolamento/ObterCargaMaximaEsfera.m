@@ -1,4 +1,4 @@
-function [ wz_max ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, R, IF, IE, k)
+function [ wz_max, Zw ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, R, IF, IE, k)
 %ObterCargaMaximaEsfera Determina a carga maxima de esfera do rolamento
 %   Realiza um processo iterativo para determinar a carga na esfera mais
 %   carregada do rolamento.
@@ -13,7 +13,7 @@ function [ wz_max ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, R, IF, IE, k)
 %   IE - Integrais elípticas de segunda ordem, pistas interna e externa
 %   k - Parametros de elipticidade, pistas interna e externa
 
-[delta K] = deal(zeros(2,1));
+[delta, K] = deal(zeros(2,1));
 
 for i=1:2
     % Determina a deformação elástica máxima no contato
@@ -23,5 +23,7 @@ end
 
 delta_m = sum(delta);
 Kj = 1/((1/K(1)).^(2/3) + (1/K(2)).^(2/3)).^(3/2);
+
+wz_max = Kj*delta_M^(3/2)*(1-cd/(2*delta_m))^(3/2);
 
 end

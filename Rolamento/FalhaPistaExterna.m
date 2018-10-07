@@ -84,3 +84,14 @@ anelInt.omega_n = FreqNatural(2,E,anelInt.I,anelInt.mu,anelInt.Rneu);
 % Rigidezes anel externo e interno
 anelExt.k = anelExt.m*anelExt.omega_n^2;
 anelInt.k = anelInt.m*anelInt.omega_n^2;
+
+[Rx,Ry,R,Rd,IF,IE,k] = deal(zeros(2,1));
+
+aneis = [anelInt anelExt];
+rb = Db*1e-3/2;
+
+for i=1:2
+    [Rx(i),Ry(i),R(i),Rd(i)] = RaiosCurvatura(rb,rb,aneis(i).rx,aneis(i).ry);
+    
+end
+[Rx,Ry,R,Rd] = RaiosCurvatura
