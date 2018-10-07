@@ -5,7 +5,7 @@ clearvars;
 %----- Entrada de dados -----%
 t0 = 0; % Instante inicial
 tf = 5; % Instante final
-N = 1800; % Velocidade de rotacao, em revolcoes por minuto
+N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
 D = 42; % Diametro externo da pista externa, milimetros
@@ -43,7 +43,6 @@ rho = 861; % Massa específica, kg/anelExt.m^3
 
 % Propriedades do defeito e carregamento
 Cmax = 100; % Carga maxima aplicada no eixo, newtons
-psi_m = pi/3; % Angulo maximo de distribuicao do carregamento, radianos
 theta = 0; % Angulo entre a carga e o defeito na pista externa
 d_def = 0.1; % Tamanho do defeito, milimetros
 da = 0; % Deslocamento axial provocado pelo defeito, milimetros
@@ -54,6 +53,7 @@ dr = 1; % Deslocamento radial provocado pelo defeito, milimetros
 % Propriedades derivadas do rolamento
 c_d = 2*c_r; % Folga diametral (diametral clearance), milimetros
 Dp = (D + d)/2; % Pitch diameter, milimetros
+rb = Db*1e-3/2; % Raio das esferas, metros
 
 % Velocidades angulares dos aneis interno e externo
 % Como os rolamentos são embutidos no mancal, a velocidade angular do
@@ -88,7 +88,6 @@ anelInt.k = anelInt.m*anelInt.omega_n^2;
 [Rx,Ry,R,Rd,IF,IE,k] = deal(zeros(2,1));
 
 aneis = [anelInt anelExt];
-rb = Db*1e-3/2;
 
 for i=1:2
     [Rx(i),Ry(i),R(i),Rd(i)] = RaiosCurvatura(rb,rb,aneis(i).rx,aneis(i).ry);
