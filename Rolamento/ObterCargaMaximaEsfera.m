@@ -6,8 +6,8 @@ function [ wz_max, Zw ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, R, IF, IE, k)
 %   PARAMETROS DE ENTRADA
 %   wz - Carga radial, N
 %   n - Numero de esferas
-%   cd - Folga diametral, mm
-%   Eef - Modulo de elasticidade efetivo, MPa
+%   cd - Folga diametral, m
+%   Eef - Modulo de elasticidade efetivo, Pa
 %   R - Somas de curvatura, pistas interna e externa
 %   IF - Integrais elípticas de primeira ordem, pistas interna e externa
 %   IE - Integrais elípticas de segunda ordem, pistas interna e externa
