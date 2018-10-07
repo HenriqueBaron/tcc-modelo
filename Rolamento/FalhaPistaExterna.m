@@ -92,6 +92,8 @@ rb = Db*1e-3/2;
 
 for i=1:2
     [Rx(i),Ry(i),R(i),Rd(i)] = RaiosCurvatura(rb,rb,aneis(i).rx,aneis(i).ry);
-    
+    [IF(i),IE(i),k(i)] = ParametrosElipseContato(Rd(i));
 end
-[Rx,Ry,R,Rd] = RaiosCurvatura
+
+Eef = E/(1-ni^2);
+[wz_max, Zw] = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
