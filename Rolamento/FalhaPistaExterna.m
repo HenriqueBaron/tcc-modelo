@@ -8,34 +8,34 @@ tf = 5; % Instante final
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
-D = 42; % Diametro externo da pista externa, milimetros
-d = 20; % Diametro interno da pista interna, milimetros
-D2 = 37.19; % Diametro interno da pista externa, milimetros
-d2 = 24.65; % Diametro externo da pista interna, milimetros
-Db = 6.35; % Diametro das esferas, milimetros
+D = 42e-3; % Diametro externo da pista externa, metros
+d = 20e-3; % Diametro interno da pista interna, metros
+D2 = 37.19e-3; % Diametro interno da pista externa, metros
+d2 = 24.65e-3; % Diametro externo da pista interna, metros
+Db = 6.35e-3; % Diametro das esferas, metros
 Nb = 9; % Numero de esferas
 m_b = 1.05e-3; % Massa de cada esfera, kg
 alpha = 0; % Angulo de contato do rolamento
-c_r = 12.5e-3; % Folga radial (radial clearance), milimetros
-E = 200e3; % Modulo de elasticidade do aco dos aneis e esferas, MPa
+c_r = 12.5e-6; % Folga radial (radial clearance), metros
+E = 200e9; % Modulo de elasticidade do aco dos aneis e esferas, Pa
 ni = 0.3; % Coeficiente de Poisson para aneis e esferas
 rolos = 0; % Rolamento de esferas = 0; rolamento de rolos = 1
 
 % Propriedades do anel externo do rolamento
 anelExt.m = 0.035; % Massa, kg
-anelExt.mu = 0.289e-3; % Massa linear, kg/mm
-anelExt.I = 31.802; % Momento de inercia, mm^4
-anelExt.Rneu = 19.43; % Raio da linha neutra, mm
-anelExt.rx = 18.68; % Raio de curvatura no eixo X, mm
-anelExt.ry = 3.18; % Raio de curvatura no eixo Y (groove), mm
+anelExt.mu = 0.289; % Massa linear, kg/m
+anelExt.I = 31.802e-12; % Momento de inercia, m^4
+anelExt.Rneu = 19.43e-3; % Raio da linha neutra, m
+anelExt.rx = 18.68e-3; % Raio de curvatura no eixo X, m
+anelExt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
 
 % Propriedades do anel interno do rolamento
 anelInt.m = 0.022; % Massa, kg
-anelInt.mu = 0.301e-3; % Massa linear, kg/mm
-anelInt.I = 37.424; % Momento de inercia, mm^4
-anelInt.Rneu = 11.65; % Raio da linha neutra, mm
-anelInt.rx = 12.32; % Raio de curvatura no eixo X, mm
-anelInt.ry = 3.18; % Raio de curvatura no eixo Y (groove), mm
+anelInt.mu = 0.301; % Massa linear, kg/m
+anelInt.I = 37.424e-12; % Momento de inercia, m^4
+anelInt.Rneu = 11.65e-3; % Raio da linha neutra, m
+anelInt.rx = 12.32e-3; % Raio de curvatura no eixo X, m
+anelInt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
 
 % Propriedades do lubrificante - ISO VG 32 @ 40°C
 visc = 32e-6; % Viscosidade cinemática, anelExt.m^2/s (1 anelExt.m^2/s = 10^6 centistokes)
@@ -44,16 +44,16 @@ rho = 861; % Massa específica, kg/anelExt.m^3
 % Propriedades do defeito e carregamento
 Cmax = 100; % Carga maxima aplicada no eixo, newtons
 theta = 0; % Angulo entre a carga e o defeito na pista externa
-d_def = 0.1; % Tamanho do defeito, milimetros
-da = 0; % Deslocamento axial provocado pelo defeito, milimetros
-dr = 1; % Deslocamento radial provocado pelo defeito, milimetros
+d_def = 0.1e-3; % Tamanho do defeito, metros
+da = 0; % Deslocamento axial provocado pelo defeito, metros
+dr = 1e-3; % Deslocamento radial provocado pelo defeito, metros
 
 %------------------------------------------------------------------------%
 
 % Propriedades derivadas do rolamento
-c_d = 2*c_r; % Folga diametral (diametral clearance), milimetros
-Dp = (D + d)/2; % Pitch diameter, milimetros
-rb = Db*1e-3/2; % Raio das esferas, metros
+c_d = 2*c_r; % Folga diametral (diametral clearance), metros
+Dp = (D + d)/2; % Pitch diameter, metros
+rb = Db/2; % Raio das esferas, metros
 
 % Velocidades angulares dos aneis interno e externo
 % Como os rolamentos são embutidos no mancal, a velocidade angular do
