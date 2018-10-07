@@ -8,10 +8,6 @@ tf = 5; % Instante final
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
-D = 42e-3; % Diametro externo da pista externa, metros
-d = 20e-3; % Diametro interno da pista interna, metros
-D2 = 37.19e-3; % Diametro interno da pista externa, metros
-d2 = 24.65e-3; % Diametro externo da pista interna, metros
 Db = 6.35e-3; % Diametro das esferas, metros
 Nb = 9; % Numero de esferas
 m_b = 1.05e-3; % Massa de cada esfera, kg
@@ -22,6 +18,8 @@ ni = 0.3; % Coeficiente de Poisson para aneis e esferas
 rolos = 0; % Rolamento de esferas = 0; rolamento de rolos = 1
 
 % Propriedades do anel externo do rolamento
+anelExt.D = 42e-3; % Diametro externo da pista externa, metros
+anelExt.D2 = 37.19e-3; % Diametro interno da pista externa, metros
 anelExt.m = 0.035; % Massa, kg
 anelExt.mu = 0.289; % Massa linear, kg/m
 anelExt.I = 31.802e-12; % Momento de inercia, m^4
@@ -30,6 +28,8 @@ anelExt.rx = 18.68e-3; % Raio de curvatura no eixo X, m
 anelExt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
 
 % Propriedades do anel interno do rolamento
+anelInt.D = 20e-3; % Diametro interno da pista interna, metros
+anelInt.D2 = 24.65e-3; % Diametro externo da pista interna, metros
 anelInt.m = 0.022; % Massa, kg
 anelInt.mu = 0.301; % Massa linear, kg/m
 anelInt.I = 37.424e-12; % Momento de inercia, m^4
@@ -52,7 +52,7 @@ dr = 1e-3; % Deslocamento radial provocado pelo defeito, metros
 
 % Propriedades derivadas do rolamento
 c_d = 2*c_r; % Folga diametral (diametral clearance), metros
-Dp = (D + d)/2; % Pitch diameter, metros
+Dp = (anelExt.D + anelInt.D)/2; % Pitch diameter, metros
 rb = Db/2; % Raio das esferas, metros
 
 % Velocidades angulares dos aneis interno e externo
