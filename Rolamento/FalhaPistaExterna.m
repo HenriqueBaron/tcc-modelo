@@ -42,7 +42,7 @@ visc = 32e-6; % Viscosidade cinemática, anelExt.m^2/s (1 anelExt.m^2/s = 10^6 ce
 rho = 861; % Massa específica, kg/anelExt.m^3
 
 % Propriedades do defeito e carregamento
-Cmax = 450; % Carga maxima aplicada no eixo, newtons
+Cmax = 100; % Carga maxima aplicada no eixo, newtons
 psi_m = pi/3; % Angulo maximo de distribuicao do carregamento, radianos
 theta = 0; % Angulo entre a carga e o defeito na pista externa
 d_def = 0.1; % Tamanho do defeito, milimetros
