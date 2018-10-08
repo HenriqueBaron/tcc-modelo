@@ -95,4 +95,4 @@ for i=1:2
 end
 
 Eef = E/(1-ni^2);
-[wz_max, Zw] = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
+wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);

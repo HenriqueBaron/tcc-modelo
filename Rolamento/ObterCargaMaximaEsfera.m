@@ -1,4 +1,4 @@
-function [ wz_max, Zw ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, R, IF, IE, k)
+function [ wz_max ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, R, IF, IE, k )
 %ObterCargaMaximaEsfera Determina a carga maxima de esfera do rolamento
 %   Realiza um processo iterativo para determinar a carga na esfera mais
 %   carregada do rolamento.
@@ -13,31 +13,21 @@ function [ wz_max, Zw ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, R, IF, IE, k)
 %   IE - Integrais elípticas de segunda ordem, pistas interna e externa
 %   k - Parametros de elipticidade, pistas interna e externa
 
-[delta, K] = deal(zeros(2,1));
+[delta,K] = deal(zeros(2,1));
 
-calcularK = @(Eef,k,R,IF,IE) pi*k*Eef*(2*IE*R/(9*IF.^3)).^(1/2);
-calcularDelta = @(wz,K) (wz/K)^(2/3);
-
-Zw = 5;
-wz_max_ant = 0;
-wz_max = wz*Zw/n;
-
-while abs(wz_max - wz_max_ant) > 1e-7
+calcularDelta = @(wz,Eef,R,IF,IE,k) IF*((9/(2*IE*R))*... 
+    (wz/(pi*k*Eef))^2)^(1/3);
+calcularK = @(Eef,R,IF,IE,k) pi*k*Eef*(2*IE*R/(9*IF^3))^(1/2);
 
 for i=1:2
     % Determina a deformação elástica máxima no contato
-    K(i) = calcularK(Eef,k(i),R(i),IF(i),IE(i));
-    delta(i) = calcularDelta(wz,K(i));
+    delta(i) = calcularDelta(wz,Eef,R(i),IF(i),IE(i),k(i));
+    K(i) = calcularK(Eef,R(i),IF(i),IE(i),k(i));
 end
 
 delta_m = sum(delta);
+Ki = 1/((1/K(1))^(2/3) + (1/K(2))^(2/3))^(3/2);
 
-Zw = pi*(1-cd/(2*delta_m))^(3/2)/ ...
-    (2.491*((1+((cd/(2*delta_m)-1)/1.23)^2)^(1/2)-1));
-
-wz_max_ant = wz_max;
-wz_max = wz*Zw/n;
-
-end
+wz_max = Ki*delta_m^(3/2)*(1-cd/(2*delta_m))^(3/2);
 
 end
