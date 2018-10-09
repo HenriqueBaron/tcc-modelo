@@ -17,17 +17,24 @@ function [ wz_max ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, R, IF, IE, k )
 
 calcularDelta = @(wz,Eef,R,IF,IE,k) IF*((9/(2*IE*R))*... 
     (wz/(pi*k*Eef))^2)^(1/3);
-calcularK = @(Eef,R,IF,IE,k) pi*k*Eef*(2*IE*R/(9*IF^3))^(1/2);
+fun = @(psi,C) (cos(psi)-C).^(3/2).*cos(psi);
 
+wz_max = wz;
+wz_max_ant = 0;
+
+while abs(wz_max-wz_max_ant) > 1e-5
 for i=1:2
     % Determina a deformação elástica máxima no contato
     delta(i) = calcularDelta(wz,Eef,R(i),IF(i),IE(i),k(i));
-    K(i) = calcularK(Eef,R(i),IF(i),IE(i),k(i));
 end
 
 delta_m = sum(delta);
-Ki = 1/((1/K(1))^(2/3) + (1/K(2))^(2/3))^(3/2);
+psi_l = acos(cd/(2*delta_m));
 
-wz_max = Ki*delta_m^(3/2)*(1-cd/(2*delta_m))^(3/2);
+wz_max_ant = wz_max;
+intFun = integral(@(psi)fun(psi,cd/(2*delta_m)),0,psi_l);
+wz_max = wz*pi*(1-cd/(2*delta_m))^(3/2)/(n*intFun);
+
+end
 
 end
