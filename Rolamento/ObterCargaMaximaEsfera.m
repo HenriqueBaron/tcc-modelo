@@ -25,7 +25,7 @@ wz_max_ant = 0;
 while abs(wz_max-wz_max_ant) > 1e-5
 for i=1:2
     % Determina a deformação elástica máxima no contato
-    delta(i) = calcularDelta(wz,Eef,R(i),IF(i),IE(i),k(i));
+    delta(i) = calcularDelta(wz_max,Eef,R(i),IF(i),IE(i),k(i));
 end
 
 delta_m = sum(delta);
