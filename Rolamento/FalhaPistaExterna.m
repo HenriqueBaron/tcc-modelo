@@ -12,7 +12,7 @@ Db = 6.35e-3; % Diametro das esferas, metros
 Nb = 9; % Numero de esferas
 m_b = 1.05e-3; % Massa de cada esfera, kg
 alpha = 0; % Angulo de contato do rolamento
-c_r = 12.5e-6; % Folga radial (radial clearance), metros
+c_r = 7e-6; % Folga radial (radial clearance), metros
 E = 200e9; % Modulo de elasticidade do aco dos aneis e esferas, Pa
 ni = 0.3; % Coeficiente de Poisson para aneis e esferas
 rolos = 0; % Rolamento de esferas = 0; rolamento de rolos = 1
