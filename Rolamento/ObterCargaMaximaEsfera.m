@@ -1,4 +1,4 @@
-function [ wz_max ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, F, epsilon, R, k)
+function [ wz_max ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, R, IF, IE, k )
 %ObterCargaMaximaEsfera Determina a carga maxima de esfera do rolamento
 %   Realiza um processo iterativo para determinar a carga na esfera mais
 %   carregada do rolamento.
@@ -6,34 +6,36 @@ function [ wz_max ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, F, epsilon, R, k)
 %   PARAMETROS DE ENTRADA
 %   wz - Carga radial, N
 %   n - Numero de esferas
-%   cd - Folga diametral, mm
-%   Eef - Modulo de elasticidade efetivo, MPa
-%   F, epsilon - Resultados integrais elipticas, pistas interna e externa
-%   R - Raios equivalentes, pistas interna e externa
-%   k - Parametros de elipticidade, pistas interna e externa
+%   cd - Folga diametral, m
+%   Eef - Modulo de elasticidade efetivo, Pa
+%   R - Somas de curvatura, pistas interna e externa
+%   IF - Integrais elípticas de primeira ordem, pistas interna e externa
+%   IE - Integrais elípticas de segunda ordem, pistas interna e externa
+%   k - Fatores de elipticidade, pistas interna e externa
 
-% delta = zeros(2,1);
-% Zw = 5;
-Zw = 4.37;
-% razaoComp = 0;
-% erroRel = 1; % Erro relativo do processo iterativo
-% while erroRel > 1e-5
-%     razaoCompAnt = razaoComp;
-    wz_max = Zw*wz/n;
-%     
-%     % Compressoes locais elasticas maximas
-%     for i=1:2
-%         delta(i) = F(i)*(9/(2*epsilon(i)*R(i))*(wz_max/(pi*k(i)*Eef))^2)^(1/3);
-%     end
-%     deltaSum = sum(delta);
-%     
-%     razaoComp = cd/(2*deltaSum);
-%     
-%     % Reavaliacao do valor de Zw
-%     Zw = pi*(1-razaoComp)^(3/2)/(2.491*(sqrt(1+((1-razaoComp)/1.23)^2)-1));
-%     
-%     erroRel = abs(razaoComp - razaoCompAnt)/razaoComp;
-% end
+delta = deal(zeros(2,1));
+
+fun = @(psi,C) (cos(psi)-C).^(3/2).*cos(psi);
+
+wz_max = wz;
+Zw = 5;
+Zw_ant = 0;
+
+while abs(Zw - Zw_ant) > 1e-7
+for i=1:2
+    % Determina a deformação elástica máxima no contato
+    delta(i) = DeformacaoElastica(wz_max,Eef,R(i),IF(i),IE(i),k(i));
+end
+
+delta_m = sum(delta);
+psi_l = acos(cd/(2*delta_m));
+
+Zw_ant = Zw;
+
+intFun = integral(@(psi)fun(psi,cd/(2*delta_m)),0,psi_l);
+Zw = pi*(1-cd/(2*delta_m))^(3/2)/intFun;
+wz_max = wz*Zw/n;
 
 end
 
+end
