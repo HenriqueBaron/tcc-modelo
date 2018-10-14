@@ -4,8 +4,9 @@ clearvars;
 
 %----- Entrada de dados -----%
 t0 = 0; % Instante inicial
-tf = 5; % Instante final
+tf = 1; % Instante final
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
+Fs = 1000; % Frequência de amostragem, Hz
 
 % Dados do rolamento - 6004 2RSH
 Db = 6.35e-3; % Diametro das esferas, metros
@@ -52,6 +53,10 @@ da = 0; % Deslocamento axial provocado pelo defeito, metros
 dr = 1e-3; % Deslocamento radial provocado pelo defeito, metros
 
 %------------------------------------------------------------------------%
+% Propriedades derivadas da amostragem
+T = 1/Fs; % Período de cada amostra
+L = (tf-t0)/T; % Comprimento do sinal
+t = t0+(0:L-1)*T; % Vetor tempo
 
 % Propriedades derivadas do rolamento
 c_d = 2*c_r; % Folga diametral (diametral clearance), metros
@@ -99,3 +104,5 @@ end
 
 Eef = E/(1-ni^2);
 wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
+
+
