@@ -4,9 +4,8 @@ clearvars;
 
 %----- Entrada de dados -----%
 t0 = 0; % Instante inicial
-tf = 1; % Instante final
+tf = 0.2; % Instante final
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
-Fs = 1000; % Frequência de amostragem, Hz
 
 % Dados do rolamento - 6004 2RSH
 Db = 6.35e-3; % Diametro das esferas, metros
@@ -53,11 +52,6 @@ da = 0; % Deslocamento axial provocado pelo defeito, metros
 dr = 1e-3; % Deslocamento radial provocado pelo defeito, metros
 
 %------------------------------------------------------------------------%
-% Propriedades derivadas da amostragem
-T = 1/Fs; % Período de cada amostra
-L = (tf-t0)/T; % Comprimento do sinal
-t = t0+(0:L-1)*T; % Vetor tempo
-
 % Propriedades derivadas do rolamento
 c_d = 2*c_r; % Folga diametral (diametral clearance), metros
 Dp = (anelExt.D + anelInt.D)/2; % Pitch diameter, metros
@@ -79,6 +73,20 @@ BPFO = Nb/2*(anelInt.omega-anelExt.omega)*(1-cos(alpha)*Db/Dp);
 BPFI = Nb/2*(anelInt.omega-anelExt.omega)*(1+cos(alpha)*Db/Dp);
 % Ball Spin Frequency
 BSF = Dp/(2*Db)*(anelInt.omega-anelExt.omega)*(1-cos(alpha)^2*Db^2/Dp^2);
+
+% Propriedades da coleta de dados
+% Frequência de amostragem é múltipla da frequência em que uma esfera
+% incide sobre um defeito na pista externa.
+Fs = 10*BPFO/(2*pi); 
+T = 1/Fs; % Período de cada amostra
+L = (tf-t0)/T; % Comprimento do sinal
+if mod(L,floor(L))>0 % Se L não for inteiro
+    L = ceil(L);
+end
+if mod(L,2)>0 % Se L não for par
+    L = L+1;
+end
+t = t0+(0:L-1)*T; % Vetor tempo
 
 % Determinacao do carregamento estatico
 epsilon = 1/2*(1+tan(alpha)*da/dr);
@@ -105,4 +113,4 @@ end
 Eef = E/(1-ni^2);
 wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
 
-
+fd = ImpulsosImpacto(t,BPFO/(2*pi));
