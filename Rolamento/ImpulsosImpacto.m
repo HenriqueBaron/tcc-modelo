@@ -5,7 +5,11 @@ function [x] = ImpulsosImpacto(t, fImp)
 %   t - vetor tempo para o qual o sinal deve ser gerado;
 %   fImp - frequência dos impulsos
 kMax = ceil(fImp*t(end));
-syms k;
-x = double(symsum(kroneckerDelta(t-k/fImp),k,0,kMax));
+x = zeros(1,length(t));
+parfor i=1:length(x)
+    for k=0:kMax
+        x(i) = x(i)+le(range([t(i) k/fImp]),1e-5);
+    end
+end
 end
 
