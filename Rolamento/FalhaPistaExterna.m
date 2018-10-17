@@ -40,9 +40,14 @@ anelInt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
 % Propriedades do lubrificante - ISO VG 32 @ 40°C
 visc = 32e-6; % Viscosidade cinematica, m^2/s (1 m^2/s = 10^6 centistokes)
 rho = 861; % Massa especifica, kg/m^3
-kf = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
-nf = 1.388; % Expoente para calculo da forca de restauracao
-cf = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
+% Filme de fluido entre anel externo e esfera
+kfExt = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
+nfExt = 1.388; % Expoente para calculo da forca de restauracao
+cfExt = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
+% Filme de fluixo entre anel interno e esfera
+kfInt = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
+nfInt = 1.388; % Expoente para calculo da forca de restauracao
+cfInt = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
 
 % Propriedades do defeito e carregamento
 Cmax = 100; % Carga maxima aplicada no eixo, newtons
