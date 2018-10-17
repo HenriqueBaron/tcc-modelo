@@ -8,7 +8,7 @@ kMax = ceil(fImp*t(end));
 x = zeros(1,length(t));
 parfor i=1:length(x)
     for k=0:kMax
-        x(i) = x(i)+le(range([t(i) k/fImp]),1e-5);
+        x(i) = x(i)+le(range([t(i) k/fImp]),1e-6);
     end
 end
 end
