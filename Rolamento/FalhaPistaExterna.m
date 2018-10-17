@@ -15,7 +15,7 @@ alpha = 0; % Angulo de contato do rolamento
 c_r = 7e-6; % Folga radial (radial clearance), metros
 E = 200e9; % Modulo de elasticidade do aco dos aneis e esferas, Pa
 ni = 0.3; % Coeficiente de Poisson para aneis e esferas
-rolos = 0; % Rolamento de esferas = 0; rolamento de rolos = 1
+rolos = false; % Rolamento é de rolos?
 
 % Propriedades do anel externo do rolamento
 anelExt.D = 42e-3; % Diametro externo da pista externa, metros
