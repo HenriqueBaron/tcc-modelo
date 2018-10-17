@@ -38,8 +38,11 @@ anelInt.rx = 12.32e-3; % Raio de curvatura no eixo X, m
 anelInt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
 
 % Propriedades do lubrificante - ISO VG 32 @ 40°C
-visc = 32e-6; % Viscosidade cinemática, anelExt.m^2/s (1 anelExt.m^2/s = 10^6 centistokes)
-rho = 861; % Massa específica, kg/anelExt.m^3
+visc = 32e-6; % Viscosidade cinematica, m^2/s (1 m^2/s = 10^6 centistokes)
+rho = 861; % Massa especifica, kg/m^3
+kf = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
+nf = 1.388; % Expoente para calculo da forca de restauracao
+cf = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
 
 % Propriedades do defeito e carregamento
 Cmax = 100; % Carga maxima aplicada no eixo, newtons
@@ -76,7 +79,7 @@ BSF = Dp/(2*Db)*(anelInt.omega-anelExt.omega)*(1-cos(alpha)^2*Db^2/Dp^2);
 epsilon = 1/2*(1+tan(alpha)*da/dr);
 
 % Frequencias naturais - aneis externo e interno
-n = 2; % Modo de vibracao considerado
+% Segundo modo de vibração do anel considerado
 FreqNatural = @(n,E,I,mu,R) n*(n^2-1)/sqrt(1+n^2)*sqrt(E*I/(mu*R^4));
 anelExt.omega_n = FreqNatural(2,E,anelExt.I,anelExt.mu,anelExt.Rneu);
 anelInt.omega_n = FreqNatural(2,E,anelInt.I,anelInt.mu,anelInt.Rneu);
