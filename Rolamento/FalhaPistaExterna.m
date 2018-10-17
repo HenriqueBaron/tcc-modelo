@@ -110,7 +110,7 @@ anelInt.k = anelInt.m*anelInt.omega_n^2;
 
 aneis = [anelInt anelExt];
 
-for i=1:2
+parfor i=1:2
     [Rx(i),Ry(i),R(i),Rd(i)] = RaiosCurvatura(rb,rb,aneis(i).rx,aneis(i).ry);
     [IF(i),IE(i),k(i)] = ParametrosElipseContato(Rd(i));
 end
