@@ -118,4 +118,34 @@ end
 Eef = E/(1-ni^2);
 wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
 
-fd = ImpulsosImpacto(t,BPFO/(2*pi));
+% Vetor de forcas ao longo do tempo
+ft = wz_max*ImpulsosImpacto(t,BPFO/(2*pi));
+
+% Montagem das matrizes do sistema
+[M, K, C] = deal(zeros(3,3));
+M(1,1) = anelExt.m;
+M(2,2) = m_b;
+M(3,3) = anelInt.m;
+
+K(1,1) = anelExt.k + kfExt;
+K(1,2) = -kfExt;
+K(2,1) = -kfExt;
+K(2,2) = kfExt + kfInt;
+K(2,3) = -kfInt;
+K(3,2) = -kfInt;
+K(3,3) = anelInt.k + kfInt;
+
+C(1,1) = cfExt;
+C(1,2) = -cfExt;
+C(2,1) = -cfExt;
+C(2,2) = cfExt + cfInt;
+C(2,3) = -cfInt;
+C(3,2) = -cfInt;
+C(3,3) = cfInt;
+
+% Montagem das matrizes de forca e deslocamento
+% No modelo de vibracoes, eles representam vetores. Aqui, como os dados sao
+% representados ao longo do tempo, cada coluna das matrizes representa o
+% vetor em um instante de tempo.
+[x, F] = deal(zeros(3,L));
+F(1,:) = ft;
