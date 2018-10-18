@@ -26,6 +26,16 @@ if size(M,2) ~= size(F,1) || ...
         'nao correspondem a altura do vetor de forcas.']);
 end
 
+% Inicializacao dos vetores
+dydt = zeros(length(y));
+[yOrdemBaixa, yOrdemAlta] = deal(zeros(length(y)/2));
+for i=1:length(yOrdemAlta)
+    yOrdemBaixa(i) = y(2*i-1); % Elementos de y, indices impares
+    yOrdemAlta(i) = y(2*i); % Elementos de y, indices pares
+end
+
+% Calcula os valores para o vetor que contem as equacoes de ordem 2
+dydtOrdemAlta = (F - C*yOrdemAlta - K*yOrdemBaixa)*inv(M);
 
 end
 
