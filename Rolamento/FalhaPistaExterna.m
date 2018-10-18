@@ -143,9 +143,3 @@ C(2,3) = -cfInt;
 C(3,2) = -cfInt;
 C(3,3) = cfInt;
 
-% Montagem das matrizes de forca e deslocamento
-% No modelo de vibracoes, eles representam vetores. Aqui, como os dados sao
-% representados ao longo do tempo, cada coluna das matrizes representa o
-% vetor em um instante de tempo.
-[x, F] = deal(zeros(3,L));
-F(1,:) = ft;
