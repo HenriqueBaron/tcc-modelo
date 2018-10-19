@@ -118,9 +118,6 @@ end
 Eef = E/(1-ni^2);
 wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
 
-% Vetor de forcas ao longo do tempo
-ft = wz_max*ImpulsosImpacto(t,BPFO/(2*pi));
-
 % Montagem das matrizes do sistema
 [M, K, C] = deal(zeros(3,3));
 M(1,1) = anelExt.m;
@@ -143,3 +140,7 @@ C(2,3) = -cfInt;
 C(3,2) = -cfInt;
 C(3,3) = cfInt;
 
+% Referencia de funcao para definir a forca externa em cada instante
+F = @(t)[wz_max*ImpulsosImpacto(t,BPFO/(2*pi)); 0; 0];
+
+[y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),t, zeros(6,1));
