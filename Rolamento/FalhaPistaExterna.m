@@ -4,7 +4,7 @@ clearvars;
 
 %----- Entrada de dados -----%
 t0 = 0; % Instante inicial
-tf = 0.02; % Instante final
+tf = 0.04; % Instante final
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
@@ -135,8 +135,8 @@ F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
 % Determinacao de parametros para o espectro de frequencias
 Y = fft(y(:,1));
-L = length(y);
-Fs = length(t)/(t(end) - t(1)); % Frequencia de amostragem
+L = length(Y);
+Fs = L/(t(end) - t(1)); % Frequencia de amostragem
 f = (0:L-1)*(Fs/L);
 Ps = abs(Y).^2/L;
 
