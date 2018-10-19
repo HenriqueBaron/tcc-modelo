@@ -144,6 +144,7 @@ C(3,3) = cfInt;
 fImpacto = @(t)wz_max*square(t*BPFO, 0.5);
 F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
+% Resolucao das ODEs
 [t, y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),[t0 tf], zeros(6,1));
 
 figure(1);
@@ -152,3 +153,4 @@ title('Perfil dos impulsos de impacto');
 
 figure(2)
 plot(t,y(:,1),t,y(:,2),t,y(:,3));
+title('Deslocamentos [m]');
