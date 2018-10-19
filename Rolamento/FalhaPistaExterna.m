@@ -140,7 +140,8 @@ C(2,3) = -cfInt;
 C(3,2) = -cfInt;
 C(3,3) = cfInt;
 
-% Referencia de funcao para definir a forca externa em cada instante
-F = @(t)[wz_max*ImpulsosImpacto(t,BPFO/(2*pi)); 0; 0];
+% Referencias de funcao para definir a forca externa em cada instante
+fImpacto = @(t)wz_max*ImpulsosImpacto(t,BPFO/(2*pi));
+F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
 [y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),t, zeros(6,1));
