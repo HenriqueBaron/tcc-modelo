@@ -138,15 +138,22 @@ Y = fft(y(:,1));
 L = length(Y);
 Fs = L/(t(end) - t(1)); % Frequencia de amostragem
 f = (0:L-1)*(Fs/L);
-Ps = abs(Y).^2/L;
+Ps = abs(Y/L);
 
 figure(1);
 plot(t,fImpacto(t));
 title('Perfil dos impulsos de impacto');
+xlabel('Tempo [s]');
+ylabel('Força [N]');
 
 figure(2)
 plot(t,y(:,1),t,y(:,2),t,y(:,3));
-title('Deslocamentos [m]');
+legend('Anel externo','Esfera','Anel interno');
+title('Deslocamentos');
+xlabel('Tempo [s]');
+ylabel('Deslocamento [m]');
 
 figure(3)
 plot(f,Ps);
+title('Espectro de frequências');
+xlabel('Frequência [Hz]');
