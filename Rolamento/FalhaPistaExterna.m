@@ -4,7 +4,7 @@ clearvars;
 
 %----- Entrada de dados -----%
 t0 = 0; % Instante inicial
-tf = 0.05; % Instante final
+tf = 0.02; % Instante final
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
@@ -79,20 +79,6 @@ BPFI = Nb/2*(anelInt.omega-anelExt.omega)*(1+cos(alpha)*Db/Dp);
 % Ball Spin Frequency
 BSF = Dp/(2*Db)*(anelInt.omega-anelExt.omega)*(1-cos(alpha)^2*Db^2/Dp^2);
 
-% Propriedades da coleta de dados
-% Frequência de amostragem é múltipla da frequência em que uma esfera
-% incide sobre um defeito na pista externa.
-Fs = 10*BPFO/(2*pi); 
-T = 1/Fs; % Período de cada amostra
-L = (tf-t0)/T; % Comprimento do sinal
-if mod(L,floor(L))>0 % Se L não for inteiro
-    L = ceil(L);
-end
-if mod(L,2)>0 % Se L não for par
-    L = L+1;
-end
-t = t0+(0:L-1)*T; % Vetor tempo
-
 % Determinacao do carregamento estatico
 epsilon = 1/2*(1+tan(alpha)*da/dr);
 
@@ -147,6 +133,27 @@ F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 % Resolucao das ODEs
 [t, y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),[t0 tf], zeros(6,1));
 
+% Propriedades da coleta de dados
+% Frequência de amostragem é múltipla da frequência em que uma esfera
+% incide sobre um defeito na pista externa.
+% Fs = 10*BPFO/(2*pi); 
+% T = 1/Fs; % Período de cada amostra
+% L = (tf-t0)/T; % Comprimento do sinal
+% if mod(L,floor(L))>0 % Se L não for inteiro
+%     L = ceil(L);
+% end
+% if mod(L,2)>0 % Se L não for par
+%     L = L+1;
+% end
+% t = t0+(0:L-1)*T; % Vetor tempo
+
+% Determinacao de parametros para o espectro de frequencias
+Y = fft(y(:,1));
+L = length(y);
+Fs = length(t)/(t(end) - t(1)); % Frequencia de amostragem
+f = (0:L-1)*(Fs/L);
+Ps = abs(Y).^2/L;
+
 figure(1);
 plot(t,fImpacto(t));
 title('Perfil dos impulsos de impacto');
@@ -154,3 +161,6 @@ title('Perfil dos impulsos de impacto');
 figure(2)
 plot(t,y(:,1),t,y(:,2),t,y(:,3));
 title('Deslocamentos [m]');
+
+figure(3)
+plot(f,Ps);
