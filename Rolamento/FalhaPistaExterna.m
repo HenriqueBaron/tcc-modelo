@@ -4,7 +4,7 @@ clearvars;
 
 %----- Entrada de dados -----%
 t0 = 0; % Instante inicial
-tf = 0.2; % Instante final
+tf = 0.05; % Instante final
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
@@ -141,7 +141,14 @@ C(3,2) = -cfInt;
 C(3,3) = cfInt;
 
 % Referencias de funcao para definir a forca externa em cada instante
-fImpacto = @(t)wz_max*ImpulsosImpacto(t,BPFO/(2*pi));
+fImpacto = @(t)wz_max*square(t*BPFO, 0.5);
 F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
-[y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),t, zeros(6,1));
+[t, y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),[t0 tf], zeros(6,1));
+
+figure(1);
+plot(t,fImpacto(t));
+title('Perfil dos impulsos de impacto');
+
+figure(2)
+plot(t,y(:,1),t,y(:,2),t,y(:,3));
