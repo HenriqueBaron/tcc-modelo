@@ -4,7 +4,7 @@ clearvars;
 
 %----- Entrada de dados -----%
 t0 = 0; % Instante inicial
-tf = 0.04; % Instante final
+tf = 0.03; % Instante final
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
