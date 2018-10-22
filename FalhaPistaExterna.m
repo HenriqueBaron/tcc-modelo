@@ -79,9 +79,6 @@ BPFI = Nb/2*(anelInt.omega-anelExt.omega)*(1+cos(alpha)*Db/Dp);
 % Ball Spin Frequency
 BSF = Dp/(2*Db)*(anelInt.omega-anelExt.omega)*(1-cos(alpha)^2*Db^2/Dp^2);
 
-% Determinacao do carregamento estatico
-epsilon = 1/2*(1+tan(alpha)*da/dr);
-
 % Frequencias naturais - aneis externo e interno
 % Segundo modo de vibração do anel considerado
 FreqNatural = @(n,E,I,mu,R) n*(n^2-1)/sqrt(1+n^2)*sqrt(E*I/(mu*R^4));
