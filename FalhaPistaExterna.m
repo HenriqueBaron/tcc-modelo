@@ -60,7 +60,9 @@ dr = 1e-3; % Deslocamento radial provocado pelo defeito, metros
 % Propriedades derivadas do rolamento
 c_d = 2*c_r; % Folga diametral (diametral clearance), metros
 Dp = (anelExt.D + anelInt.D)/2; % Pitch diameter, metros
-rb = Db/2; % Raio das esferas, metros
+% O raio das esferas e calculado considerando a folga diametral. Ele e
+% portanto menor do que o valor nominal fornecido.
+rb = (anelExt.D2 - anelInt.D2 - c_d)/4;
 
 % Velocidades angulares dos aneis interno e externo
 % Como os rolamentos são embutidos no mancal, a velocidade angular do
