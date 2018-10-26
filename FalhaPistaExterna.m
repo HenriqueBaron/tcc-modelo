@@ -17,16 +17,6 @@ E = 200e9; % Modulo de elasticidade do aco dos aneis e esferas, Pa
 ni = 0.3; % Coeficiente de Poisson para aneis e esferas
 rolos = false; % Rolamento é de rolos?
 
-% Propriedades do anel externo do rolamento
-anelExt.D = 42e-3; % Diametro externo da pista externa, metros
-anelExt.D2 = 37.19e-3; % Diametro interno da pista externa, metros
-anelExt.m = 0.035; % Massa, kg
-anelExt.mu = 0.289; % Massa linear, kg/m
-anelExt.I = 31.802e-12; % Momento de inercia, m^4
-anelExt.Rneu = 19.43e-3; % Raio da linha neutra, m
-anelExt.rx = 18.68e-3; % Raio de curvatura no eixo X, m
-anelExt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
-
 % Propriedades do anel interno do rolamento
 anelInt.D = 20e-3; % Diametro interno da pista interna, metros
 anelInt.D2 = 24.65e-3; % Diametro externo da pista interna, metros
@@ -36,6 +26,16 @@ anelInt.I = 37.424e-12; % Momento de inercia, m^4
 anelInt.Rneu = 11.65e-3; % Raio da linha neutra, m
 anelInt.rx = 12.32e-3; % Raio de curvatura no eixo X, m
 anelInt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
+
+% Propriedades do anel externo do rolamento
+anelExt.D = 42e-3; % Diametro externo da pista externa, metros
+anelExt.D2 = 37.19e-3; % Diametro interno da pista externa, metros
+anelExt.m = 0.035; % Massa, kg
+anelExt.mu = 0.289; % Massa linear, kg/m
+anelExt.I = 31.802e-12; % Momento de inercia, m^4
+anelExt.Rneu = 19.43e-3; % Raio da linha neutra, m
+anelExt.rx = 18.68e-3; % Raio de curvatura no eixo X, m
+anelExt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
 
 % Propriedades do lubrificante - ISO VG 32 @ 40°C
 visc = 32e-6; % Viscosidade cinematica, m^2/s (1 m^2/s = 10^6 centistokes)
