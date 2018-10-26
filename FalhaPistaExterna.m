@@ -70,16 +70,8 @@ rb = (anelExt.D2 - anelInt.D2 - c_d)/4;
 anelInt.omega = N*pi/30;
 anelExt.omega = 0;
 
-% Frequencias principais do rolamento
-% Fundamental Train Frequency
-FTF = 0.5*(anelInt.omega*(1-cos(alpha)*Db/Dp) + ...
-        anelExt.omega*(1+cos(alpha)*Db/Dp));
 % Ball Pass Frequency, Outer
 BPFO = Nb/2*(anelInt.omega-anelExt.omega)*(1-cos(alpha)*Db/Dp);
-% Ball Pass Frequency, Inner
-BPFI = Nb/2*(anelInt.omega-anelExt.omega)*(1+cos(alpha)*Db/Dp);
-% Ball Spin Frequency
-BSF = Dp/(2*Db)*(anelInt.omega-anelExt.omega)*(1-cos(alpha)^2*Db^2/Dp^2);
 
 % Frequencias naturais - aneis externo e interno
 % Segundo modo de vibração do anel considerado
