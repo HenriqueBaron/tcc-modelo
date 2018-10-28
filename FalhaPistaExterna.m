@@ -4,7 +4,7 @@ clearvars;
 
 %----- Entrada de dados -----%
 t0 = 0; % Instante inicial
-tf = 0.03; % Instante final
+tf = 2; % Instante final
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
@@ -136,6 +136,8 @@ plot(t,fImpacto(t));
 title('Perfil dos impulsos de impacto');
 xlabel('Tempo [s]');
 ylabel('Força [N]');
+xlim([0 0.03]);
+ylim('auto');
 
 figure(2)
 plot(t,y(:,1),t,y(:,2),t,y(:,3));
@@ -143,8 +145,12 @@ legend('Anel externo','Esfera','Anel interno');
 title('Deslocamentos');
 xlabel('Tempo [s]');
 ylabel('Deslocamento [m]');
+xlim([0 0.03]);
+ylim('auto');
 
 figure(3)
 plot(f,Ps);
 title('Espectro de frequências');
 xlabel('Frequência [Hz]');
+xlim([0 800]);
+ylim([0 4e-8]);
