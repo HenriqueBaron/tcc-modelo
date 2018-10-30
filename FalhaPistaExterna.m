@@ -152,5 +152,3 @@ figure(3)
 plot(f,Ps);
 title('Espectro de frequências');
 xlabel('Frequência [Hz]');
-xlim([0 800]);
-ylim([0 4e-8]);
