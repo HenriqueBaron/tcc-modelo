@@ -15,7 +15,7 @@ alpha = 0; % Angulo de contato do rolamento
 c_r = 7e-6; % Folga radial (radial clearance), metros
 E = 200e9; % Modulo de elasticidade do aco dos aneis e esferas, Pa
 ni = 0.3; % Coeficiente de Poisson para aneis e esferas
-rolos = false; % Rolamento é de rolos?
+rolos = false; % Rolamento eh de rolos?
 
 % Propriedades do anel interno do rolamento
 anelInt.D = 20e-3; % Diametro interno da pista interna, metros
@@ -60,7 +60,7 @@ dr = 1e-3; % Deslocamento radial provocado pelo defeito, metros
 % Propriedades derivadas do rolamento
 c_d = 2*c_r; % Folga diametral (diametral clearance), metros
 Dp = (anelExt.D + anelInt.D)/2; % Pitch diameter, metros
-% O raio das esferas e calculado considerando a folga diametral. Ele e
+% O raio das esferas e calculado considerando a folga diametral. Ele eh
 % portanto menor do que o valor nominal fornecido.
 rb = (anelExt.D2 - anelInt.D2 - c_d)/4;
 
@@ -150,5 +150,5 @@ ylim('auto');
 
 figure(3)
 plot(f,Ps);
-title('Espectro de frequências');
-xlabel('Frequência [Hz]');
+title('Espectro de frequencias');
+xlabel('Frequencia [Hz]');
