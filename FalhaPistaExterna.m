@@ -119,7 +119,7 @@ C(3,2) = -cfInt;
 C(3,3) = cfInt;
 
 % Referencias de funcao para definir a forca externa em cada instante
-fImpacto = @(t)wz_max*square(t*BPFO, 0.5);
+fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2;
 F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
 % Montagem do vetor tempo para os dados de saida
