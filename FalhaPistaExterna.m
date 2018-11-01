@@ -2,7 +2,7 @@
 
 clearvars;
 
-%----- Entrada de dados -----%
+%% Entrada de dados
 t0 = 0; % Instante inicial
 tf = 4; % Instante final
 Fs = 50e3; % Frequencia de amostragem do sinal, hertz
@@ -57,8 +57,7 @@ d_def = 0.1e-3; % Tamanho do defeito, metros
 da = 0; % Deslocamento axial provocado pelo defeito, metros
 dr = 1e-3; % Deslocamento radial provocado pelo defeito, metros
 
-%------------------------------------------------------------------------%
-% Propriedades derivadas do rolamento
+%% Propriedades derivadas do rolamento
 c_d = 2*c_r; % Folga diametral (diametral clearance), metros
 Dp = (anelExt.D + anelInt.D)/2; % Pitch diameter, metros
 % O raio das esferas e calculado considerando a folga diametral. Ele eh
@@ -84,6 +83,7 @@ anelInt.omega_n = FreqNatural(2,E,anelInt.I,anelInt.mu,anelInt.Rneu);
 anelExt.k = anelExt.m*anelExt.omega_n^2;
 anelInt.k = anelInt.m*anelInt.omega_n^2;
 
+%% Parâmetros do contato entre as superficies
 [Rx,Ry,R,Rd,IF,IE,k] = deal(zeros(2,1));
 
 aneis = [anelInt anelExt];
@@ -96,7 +96,7 @@ end
 Eef = E/(1-ni^2);
 wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
 
-% Montagem das matrizes do sistema
+%% Montagem das matrizes e resolucao do sistema
 [M, K, C] = deal(zeros(3,3));
 M(1,1) = anelExt.m;
 M(2,2) = m_b;
@@ -129,7 +129,7 @@ tb = t0:Ts:tf-Ts; % Tempo-base (o solver abaixo gera o vetor tempo t)
 % Resolucao das ODEs
 [t, y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),tb, zeros(6,1));
 
-% Tratamento dos resultados
+%% Tratamento dos resultados
 pos = y(:,1);
 vel = [diff(pos)/Ts; 0];
 acc = [diff(vel)/Ts; 0];
@@ -142,6 +142,7 @@ P1 = P2(1:L/2+1);
 P1(2:end-1) = 2*P1(2:end-1);
 f = (0:L/2)*(Fs/L);
 
+%% Exibicao dos resultados
 figure(1);
 plot(t,fImpacto(t));
 title('Perfil dos impulsos de impacto');
