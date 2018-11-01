@@ -129,8 +129,13 @@ tb = t0:Ts:tf-Ts; % Tempo-base (o solver abaixo gera o vetor tempo t)
 % Resolucao das ODEs
 [t, y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),tb, zeros(6,1));
 
+% Tratamento dos resultados
+pos = y(:,1);
+vel = [diff(pos)/Ts; 0];
+acc = [diff(vel)/Ts; 0];
+
 % Determinacao de parametros para o espectro de frequencias
-Y = fft(y(:,1));
+Y = fft(pos);
 L = length(y);
 P2 = abs(Y/L);
 P1 = P2(1:L/2+1);
@@ -146,12 +151,28 @@ xlim([0 0.5]);
 ylim('auto');
 
 figure(2)
-plot(t,y(:,1));
-title('Deslocamentos');
-xlabel('Tempo [s]');
-ylabel('Deslocamento [m]');
-xlim([0 0.5]);
-ylim('auto');
+xlimTempo = [0 0.1];
+ylimTempo = 'auto';
+subplot(3,1,1);
+plot(t,pos);
+title('Deslocamento');
+ylabel('[m]');
+xlim(xlimTempo);
+ylim(ylimTempo);
+
+subplot(3,1,2);
+plot(t,vel);
+title('Velocidade');
+ylabel('[m/s]');
+xlim(xlimTempo);
+ylim(ylimTempo);
+
+subplot(3,1,3);
+plot(t,acc);
+title('Aceleracao');
+ylabel('[m^2/s]');
+xlim(xlimTempo);
+ylim(ylimTempo);
 
 figure(3)
 plot(f,P1);
