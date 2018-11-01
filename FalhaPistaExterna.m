@@ -2,9 +2,10 @@
 
 clearvars;
 
-%----- Entrada de dados -----%
+%% Entrada de dados
 t0 = 0; % Instante inicial
-tf = 2; % Instante final
+tf = 4; % Instante final
+Fs = 50e3; % Frequencia de amostragem do sinal, hertz
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
@@ -15,7 +16,7 @@ alpha = 0; % Angulo de contato do rolamento
 c_r = 7e-6; % Folga radial (radial clearance), metros
 E = 200e9; % Modulo de elasticidade do aco dos aneis e esferas, Pa
 ni = 0.3; % Coeficiente de Poisson para aneis e esferas
-rolos = false; % Rolamento é de rolos?
+rolos = false; % Rolamento eh de rolos?
 
 % Propriedades do anel interno do rolamento
 anelInt.D = 20e-3; % Diametro interno da pista interna, metros
@@ -56,11 +57,10 @@ d_def = 0.1e-3; % Tamanho do defeito, metros
 da = 0; % Deslocamento axial provocado pelo defeito, metros
 dr = 1e-3; % Deslocamento radial provocado pelo defeito, metros
 
-%------------------------------------------------------------------------%
-% Propriedades derivadas do rolamento
+%% Propriedades derivadas do rolamento
 c_d = 2*c_r; % Folga diametral (diametral clearance), metros
 Dp = (anelExt.D + anelInt.D)/2; % Pitch diameter, metros
-% O raio das esferas e calculado considerando a folga diametral. Ele e
+% O raio das esferas e calculado considerando a folga diametral. Ele eh
 % portanto menor do que o valor nominal fornecido.
 rb = (anelExt.D2 - anelInt.D2 - c_d)/4;
 
@@ -83,6 +83,7 @@ anelInt.omega_n = FreqNatural(2,E,anelInt.I,anelInt.mu,anelInt.Rneu);
 anelExt.k = anelExt.m*anelExt.omega_n^2;
 anelInt.k = anelInt.m*anelInt.omega_n^2;
 
+%% Parâmetros do contato entre as superficies
 [Rx,Ry,R,Rd,IF,IE,k] = deal(zeros(2,1));
 
 aneis = [anelInt anelExt];
@@ -95,7 +96,7 @@ end
 Eef = E/(1-ni^2);
 wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
 
-% Montagem das matrizes do sistema
+%% Montagem das matrizes e resolucao do sistema
 [M, K, C] = deal(zeros(3,3));
 M(1,1) = anelExt.m;
 M(2,2) = m_b;
@@ -118,37 +119,63 @@ C(3,2) = -cfInt;
 C(3,3) = cfInt;
 
 % Referencias de funcao para definir a forca externa em cada instante
-fImpacto = @(t)wz_max*square(t*BPFO, 0.5);
+fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2;
 F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
+% Montagem do vetor tempo para os dados de saida
+Ts = 1/Fs; % Periodo da amostra
+tb = t0:Ts:tf-Ts; % Tempo-base (o solver abaixo gera o vetor tempo t)
+
 % Resolucao das ODEs
-[t, y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),[t0 tf], zeros(6,1));
+[t, y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),tb, zeros(6,1));
+
+%% Tratamento dos resultados
+pos = y(:,1);
+vel = [diff(pos)/Ts; 0];
+acc = [diff(vel)/Ts; 0];
 
 % Determinacao de parametros para o espectro de frequencias
-Y = fft(y(:,1));
-L = length(Y);
-Fs = L/(t(end) - t(1)); % Frequencia de amostragem
-f = (0:L-1)*(Fs/L);
-Ps = abs(Y/L);
+Y = fft(pos);
+L = length(y);
+P2 = abs(Y/L);
+P1 = P2(1:L/2+1);
+P1(2:end-1) = 2*P1(2:end-1);
+f = (0:L/2)*(Fs/L);
 
+%% Exibicao dos resultados
 figure(1);
 plot(t,fImpacto(t));
 title('Perfil dos impulsos de impacto');
 xlabel('Tempo [s]');
 ylabel('Força [N]');
-xlim([0 0.03]);
+xlim([0 0.1]);
 ylim('auto');
 
 figure(2)
-plot(t,y(:,1),t,y(:,2),t,y(:,3));
-legend('Anel externo','Esfera','Anel interno');
-title('Deslocamentos');
-xlabel('Tempo [s]');
-ylabel('Deslocamento [m]');
-xlim([0 0.03]);
-ylim('auto');
+xlimTempo = [0 0.5];
+ylimTempo = 'auto';
+subplot(3,1,1);
+plot(t,pos);
+title('Deslocamento');
+ylabel('[m]');
+xlim(xlimTempo);
+ylim(ylimTempo);
+
+subplot(3,1,2);
+plot(t,vel);
+title('Velocidade');
+ylabel('[m/s]');
+xlim(xlimTempo);
+ylim(ylimTempo);
+
+subplot(3,1,3);
+plot(t,acc);
+title('Aceleracao');
+ylabel('[m^2/s]');
+xlim(xlimTempo);
+ylim(ylimTempo);
 
 figure(3)
-plot(f,Ps);
-title('Espectro de frequências');
-xlabel('Frequência [Hz]');
+plot(f,P1);
+title('Espectro de frequencias');
+xlabel('Frequencia [Hz]');
