@@ -142,16 +142,15 @@ plot(t,fImpacto(t));
 title('Perfil dos impulsos de impacto');
 xlabel('Tempo [s]');
 ylabel('Força [N]');
-xlim([0 0.03]);
+xlim([0 0.5]);
 ylim('auto');
 
 figure(2)
-plot(t,y(:,1),t,y(:,2),t,y(:,3));
-legend('Anel externo','Esfera','Anel interno');
+plot(t,y(:,1));
 title('Deslocamentos');
 xlabel('Tempo [s]');
 ylabel('Deslocamento [m]');
-xlim([0 0.03]);
+xlim([0 0.5]);
 ylim('auto');
 
 figure(3)
