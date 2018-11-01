@@ -148,11 +148,11 @@ plot(t,fImpacto(t));
 title('Perfil dos impulsos de impacto');
 xlabel('Tempo [s]');
 ylabel('Força [N]');
-xlim([0 0.5]);
+xlim([0 0.1]);
 ylim('auto');
 
 figure(2)
-xlimTempo = [0 0.1];
+xlimTempo = [0 0.5];
 ylimTempo = 'auto';
 subplot(3,1,1);
 plot(t,pos);
