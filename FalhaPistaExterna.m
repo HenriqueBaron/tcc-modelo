@@ -83,7 +83,7 @@ anelInt.omega_n = FreqNatural(2,E,anelInt.I,anelInt.mu,anelInt.Rneu);
 anelExt.k = anelExt.m*anelExt.omega_n^2;
 anelInt.k = anelInt.m*anelInt.omega_n^2;
 
-[Rx,Ry,R,Rd,IF,IE,k] = deal(zeros(2,1));
+[Rx,Ry,R,Rd,IF,IE,k,Dx,Dy] = deal(zeros(2,1));
 
 aneis = [anelInt anelExt];
 
@@ -94,6 +94,10 @@ end
 
 Eef = E/(1-ni^2);
 wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
+
+parfor i=1:2
+    [Dx(i),Dy(i)] = DimensoesElipseContato(wz_max,Eef,R(i),IE(i),k(i));
+end
 
 % Montagem das matrizes do sistema
 [M, K, C] = deal(zeros(3,3));
