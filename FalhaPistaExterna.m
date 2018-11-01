@@ -4,7 +4,8 @@ clearvars;
 
 %----- Entrada de dados -----%
 t0 = 0; % Instante inicial
-tf = 2; % Instante final
+tf = 4; % Instante final
+Fs = 10e3; % Frequencia de amostragem do sinal, hertz
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
@@ -121,15 +122,20 @@ C(3,3) = cfInt;
 fImpacto = @(t)wz_max*square(t*BPFO, 0.5);
 F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
+% Montagem do vetor tempo para os dados de saida
+Ts = 1/Fs; % Periodo da amostra
+tb = t0:Ts:tf-Ts; % Tempo-base (o solver abaixo gera o vetor tempo t)
+
 % Resolucao das ODEs
-[t, y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),[t0 tf], zeros(6,1));
+[t, y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),tb, zeros(6,1));
 
 % Determinacao de parametros para o espectro de frequencias
 Y = fft(y(:,1));
-L = length(Y);
-Fs = L/(t(end) - t(1)); % Frequencia de amostragem
-f = (0:L-1)*(Fs/L);
-Ps = abs(Y/L);
+L = length(y);
+P2 = abs(Y/L);
+P1 = P2(1:L/2+1);
+P1(2:end-1) = 2*P1(2:end-1);
+f = (0:L/2)*(Fs/L);
 
 figure(1);
 plot(t,fImpacto(t));
@@ -149,6 +155,6 @@ xlim([0 0.03]);
 ylim('auto');
 
 figure(3)
-plot(f,Ps);
+plot(f,P1);
 title('Espectro de frequencias');
 xlabel('Frequencia [Hz]');
