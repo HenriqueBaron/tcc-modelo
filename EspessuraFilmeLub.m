@@ -1,9 +1,8 @@
 function [ h ] = EspessuraFilmeLub(dp,db,Rx,k,omega,wz,Eef,eta,ksi)
-%EspessuraFilmeLubrificacao calcula a espessura do filme de graxa no
-%rolamento
-%   Determina a espessura do filme de lubrificante no rolamento atraves da
-%   teoria elastrohidrodinamica (EHD) conforme Hamrock (1994)
-%
+%ESPESSURAFILMELUB Calcula a espessura do filme de lubrificante.
+%   Determina a espessura filme de lubrificante no rolamento atrves da
+%   teoria elastohidrodinamica (EHD), utilizando uma simplificacao por
+%   fatores adimensionais.
 %   PARAMETROS DE ENTRADA
 %   dp - Diametro efetivo (pitch diameter), m
 %   db - Diametro das esferas, m
