@@ -97,26 +97,17 @@ Eef = E/(1-ni^2);
 wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
 
 %% Montagem das matrizes e resolucao do sistema
-[M, K, C] = deal(zeros(3,3));
-M(1,1) = anelExt.m;
-M(2,2) = m_b;
-M(3,3) = anelInt.m;
+M = [anelExt.m      0       0; ...
+     0              m_b     0; ...
+     0              0       anelInt.m];
 
-K(1,1) = anelExt.k + kfExt;
-K(1,2) = -kfExt;
-K(2,1) = -kfExt;
-K(2,2) = kfExt + kfInt;
-K(2,3) = -kfInt;
-K(3,2) = -kfInt;
-K(3,3) = anelInt.k + kfInt;
-
-C(1,1) = cfExt;
-C(1,2) = -cfExt;
-C(2,1) = -cfExt;
-C(2,2) = cfExt + cfInt;
-C(2,3) = -cfInt;
-C(3,2) = -cfInt;
-C(3,3) = cfInt;
+C = [cfExt      -cfExt          0; ...
+     -cfExt     cfExt + cfInt   -cfInt; ...
+     0          -cfInt          cfInt];
+ 
+K = [anelExt.k + kfExt   -kfExt          0; ...
+     -kfExt              kfExt + kfInt   -kfInt; ...
+     0                   -kfInt          anelInt.k + kfInt];
 
 % Referencias de funcao para definir a forca externa em cada instante
 fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2;
