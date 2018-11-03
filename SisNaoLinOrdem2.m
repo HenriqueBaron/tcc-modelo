@@ -1,4 +1,5 @@
-function dydt = SisNaoLinOrdem2(~, y, M, C, Klin, KfExt, KfInt, F)
+function dydt = SisNaoLinOrdem2(~, y, M, C, Klin, KfInt, KfExt, F, ...
+    nfInt, nfExt)
 %SISLINORDEM2 Monta um vetor de EDOs de ordem 2 para sistema de vibracao.
 %   Utiliza as matrizes de massa, amortecimento, rigidezes e forca externa
 %   fornecidas para montar um vetor de equacoes diferenciais do tipo
@@ -41,7 +42,8 @@ yVel = y(length(y)/2+1:end); % Segunda metade, velocidades
 
 % Montagem das equacoes diferenciais para o solver
 dydtPos = yVel;
-dydtVel = M\(F - C*yVel - Klin*yPos);
+dydtVel = M\(F - C*yVel - Klin*yPos - ...
+    KfInt*yPos.^nfInt - KfExt*yPos.^nfExt);
 
 dydt = [dydtPos; dydtVel];
 
