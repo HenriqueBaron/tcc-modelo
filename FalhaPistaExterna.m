@@ -42,10 +42,12 @@ rho = 861; % Massa especifica, kg/m^3
 % Filme de fluido entre anel interno e esfera
 fiInt.k = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
 fiInt.n = 1.388; % Expoente para calculo da forca de restauracao
+fiInt.Fs = 4.023; % Forca constante de sustentacao, N
 fiInt.c = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
 % Filme de fluido entre anel externo e esfera
 fiExt.k = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
 fiExt.n = 1.388; % Expoente para calculo da forca de restauracao
+fiExt.Fs = 4.023; % Forca constante de sustentacao, N
 fiExt.c = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
 
 % Propriedades do defeito e carregamento
@@ -116,7 +118,8 @@ KfInt = [0          0               0; ...
          0          -fiInt.k        fiInt.k];
 
 % Referencias de funcao para definir a forca externa em cada instante
-fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2;
+fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2 ...
+    - fiInt.Fs - fiExt.Fs;
 F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
 % Montagem do vetor tempo para os dados de saida
