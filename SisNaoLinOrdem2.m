@@ -1,4 +1,4 @@
-function dydt = SisNaoLinOrdem2(~, y, M, C, K, F)
+function dydt = SisNaoLinOrdem2(~, y, M, C, Klin, KfExt, KfInt, F)
 %SISLINORDEM2 Monta um vetor de EDOs de ordem 2 para sistema de vibracao.
 %   Utiliza as matrizes de massa, amortecimento, rigidezes e forca externa
 %   fornecidas para montar um vetor de equacoes diferenciais do tipo
@@ -15,13 +15,17 @@ if size(F,2) > 1
 end
 if size(M,1) ~= size(M,2) || ...
    size(C,1) ~= size(C,2) || ...
-   size(K,1) ~= size(K,2)
+   size(Klin,1) ~= size(Klin,2) || ...
+   size(KfInt,1) ~= size(KfInt,2) || ...
+   size(KfExt,1) ~= size(KfExt,2)
     error(['As matrizes de massa, amortecimento e rigidez ' ...
         'devem ser quadradas.']);
 end
 if size(M,2) ~= size(F,1) || ...
    size(C,2) ~= size(F,1) || ...
-   size(K,2) ~= size(F,1)
+   size(Klin,2) ~= size(F,1) || ...
+   size(KfInt,2) ~= size(F,1) || ...
+   size(KfExt,2) ~= size(F,1)
     error(['A largura das matrizes de massa, amortecimento e rigidez '...
         'nao correspondem a altura do vetor de forcas.']);
 end
@@ -37,7 +41,7 @@ yVel = y(length(y)/2+1:end); % Segunda metade, velocidades
 
 % Montagem das equacoes diferenciais para o solver
 dydtPos = yVel;
-dydtVel = M\(F - C*yVel - K*yPos);
+dydtVel = M\(F - C*yVel - Klin*yPos);
 
 dydt = [dydtPos; dydtVel];
 
