@@ -1,7 +1,5 @@
 % Calcula a vibracao em um rolamento com dano pontual na pista externa.
 
-clearvars;
-
 %% Entrada de dados
 t0 = 0; % Instante inicial
 tf = 4; % Instante final
