@@ -129,7 +129,7 @@ eta = visc*rho;
 h = EspessuraFilmeLub(Dp,Db,Rx,k,[aneis.omega],wz_max,Eef, ...
     eta,2.3e-8);
 
-conds_ini = [0; h(2); h(1); 0; 0; 0];
+conds_ini = [0; h(2); sum(h); 0; 0; 0];
 
 %% Resolucao do sistema
 % Montagem do vetor tempo para os dados de saida
