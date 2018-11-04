@@ -1,7 +1,5 @@
 % Calcula a vibracao em um rolamento com dano pontual na pista externa.
 
-clearvars;
-
 %% Entrada de dados
 t0 = 0; % Instante inicial
 tf = 4; % Instante final
@@ -41,14 +39,16 @@ anelExt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
 % Propriedades do lubrificante - ISO VG 32 @ 40°C
 visc = 32e-6; % Viscosidade cinematica, m^2/s (1 m^2/s = 10^6 centistokes)
 rho = 861; % Massa especifica, kg/m^3
+% Filme de fluido entre anel interno e esfera
+fiInt.k = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
+fiInt.n = 1.388; % Expoente para calculo da forca de restauracao
+fiInt.Fs = 4.023; % Forca constante de sustentacao, N
+fiInt.c = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
 % Filme de fluido entre anel externo e esfera
-kfExt = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
-nfExt = 1.388; % Expoente para calculo da forca de restauracao
-cfExt = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
-% Filme de fluixo entre anel interno e esfera
-kfInt = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
-nfInt = 1.388; % Expoente para calculo da forca de restauracao
-cfInt = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
+fiExt.k = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
+fiExt.n = 1.388; % Expoente para calculo da forca de restauracao
+fiExt.Fs = 4.023; % Forca constante de sustentacao, N
+fiExt.c = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
 
 % Propriedades do defeito e carregamento
 Cmax = 100; % Carga maxima aplicada no eixo, newtons
@@ -96,38 +96,49 @@ end
 Eef = E/(1-ni^2);
 wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
 
-%% Montagem das matrizes e resolucao do sistema
-[M, K, C] = deal(zeros(3,3));
-M(1,1) = anelExt.m;
-M(2,2) = m_b;
-M(3,3) = anelInt.m;
+%% Montagem das matrizes do sistema
+M = [anelExt.m      0       0; ...
+     0              m_b     0; ...
+     0              0       anelInt.m];
 
-K(1,1) = anelExt.k + kfExt;
-K(1,2) = -kfExt;
-K(2,1) = -kfExt;
-K(2,2) = kfExt + kfInt;
-K(2,3) = -kfInt;
-K(3,2) = -kfInt;
-K(3,3) = anelInt.k + kfInt;
+C = [fiExt.c      -fiExt.c              0; ...
+     -fiExt.c     fiExt.c + fiInt.c     -fiInt.c; ...
+     0            -fiInt.c              fiInt.c];
+ 
+Klin = [anelExt.k      0       0; ...
+        0              0       0; ...
+        0              0       anelInt.k];
 
-C(1,1) = cfExt;
-C(1,2) = -cfExt;
-C(2,1) = -cfExt;
-C(2,2) = cfExt + cfInt;
-C(2,3) = -cfInt;
-C(3,2) = -cfInt;
-C(3,3) = cfInt;
+KfExt = [1     -1       0; ...
+        -1      1       0; ...
+         0      0       0];
+
+KfInt = [0      0       0; ...
+         0      1      -1; ...
+         0     -1       1];
 
 % Referencias de funcao para definir a forca externa em cada instante
 fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2;
 F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
+%% Definicao de condicoes iniciais
+
+% As condicoes de posicao inicial correspondem a espessura do filme
+eta = visc*rho;
+
+h = EspessuraFilmeLub(Dp,Db,Rx,k,[aneis.omega],wz_max,Eef, ...
+    eta,2.3e-8);
+
+conds_ini = [0; h(2); sum(h); 0; 0; 0];
+
+%% Resolucao do sistema
 % Montagem do vetor tempo para os dados de saida
 Ts = 1/Fs; % Periodo da amostra
 tb = t0:Ts:tf-Ts; % Tempo-base (o solver abaixo gera o vetor tempo t)
 
 % Resolucao das ODEs
-[t, y] = ode45(@(t,y) SisLinOrdem2(t,y,M,C,K,F(t)),tb, zeros(6,1));
+[t, y] = ode45(@(t,y) SisNaoLinOrdem2(t,y,M,C,Klin,KfInt,KfExt,F(t),...
+    fiInt,fiExt) ,tb, conds_ini);
 
 %% Tratamento dos resultados
 pos = y(:,1);
