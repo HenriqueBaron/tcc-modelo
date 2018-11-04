@@ -34,7 +34,7 @@ end
 % Cria um function handle para calcular a forca de restauracao por uma
 % rigidez nao-linear. O function handle eh necessario porque pode haver um
 % termo de forca constante a incluir.
-fk = @(y,fiSt) fiSt.k.*y.^fiSt.n + fiSt.Fs;
+fk = @(y,fiSt) real(fiSt.k.*y.^fiSt.n) + fiSt.Fs;
 
 % A resolucao e a manipulacao dos dados para o solver e feita em duas
 % partes (dividindo ao meio os vetores) porque os algoritmos para ODEs do
