@@ -1,5 +1,5 @@
 function dydt = SisNaoLinOrdem2(~, y, M, C, Klin, KfInt, KfExt, F, ...
-    nfInt, nfExt)
+    fiInt, fiExt)
 %SISLINORDEM2 Monta um vetor de EDOs de ordem 2 para sistema de vibracao.
 %   Utiliza as matrizes de massa, amortecimento, rigidezes e forca externa
 %   fornecidas para montar um vetor de equacoes diferenciais do tipo
@@ -31,6 +31,11 @@ if size(M,2) ~= size(F,1) || ...
         'nao correspondem a altura do vetor de forcas.']);
 end
 
+% Cria um function handle para calcular a forca de restauracao por uma
+% rigidez nao-linear. O function handle eh necessario porque pode haver um
+% termo de forca constante a incluir.
+fk = @(y,fiSt) fiSt.k.*y.^fiSt.n + fiSt.Fs;
+
 % A resolucao e a manipulacao dos dados para o solver e feita em duas
 % partes (dividindo ao meio os vetores) porque os algoritmos para ODEs do
 % MATLAB resolvem equacoes de primeira ordem. Para segunda ordem, uma
@@ -43,7 +48,7 @@ yVel = y(length(y)/2+1:end); % Segunda metade, velocidades
 % Montagem das equacoes diferenciais para o solver
 dydtPos = yVel;
 dydtVel = M\(F - C*yVel - Klin*yPos - ...
-    KfInt*yPos.^nfInt - KfExt*yPos.^nfExt);
+    KfInt*fk(yPos,fiInt) - KfExt*fk(yPos,fiExt));
 
 dydt = [dydtPos; dydtVel];
 
