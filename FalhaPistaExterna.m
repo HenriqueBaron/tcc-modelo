@@ -96,7 +96,7 @@ end
 Eef = E/(1-ni^2);
 wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
 
-%% Montagem das matrizes e resolucao do sistema
+%% Montagem das matrizes do sistema
 M = [anelExt.m      0       0; ...
      0              m_b     0; ...
      0              0       anelInt.m];
@@ -118,17 +118,27 @@ KfInt = [0      0       0; ...
          0     -1       1];
 
 % Referencias de funcao para definir a forca externa em cada instante
-fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2 ...
-    - fiInt.Fs - fiExt.Fs;
+fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2;
 F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
+%% Definicao de condicoes iniciais
+
+% As condicoes de posicao inicial correspondem a espessura do filme
+eta = visc*rho;
+
+h = EspessuraFilmeLub(Dp,Db,Rx,k,[aneis.omega],wz_max,Eef, ...
+    eta,2.3e-8);
+
+conds_ini = [0; h(2); h(1); 0; 0; 0];
+
+%% Resolucao do sistema
 % Montagem do vetor tempo para os dados de saida
 Ts = 1/Fs; % Periodo da amostra
 tb = t0:Ts:tf-Ts; % Tempo-base (o solver abaixo gera o vetor tempo t)
 
 % Resolucao das ODEs
 [t, y] = ode45(@(t,y) SisNaoLinOrdem2(t,y,M,C,Klin,KfInt,KfExt,F(t),...
-    fiInt,fiExt) ,tb, zeros(6,1));
+    fiInt,fiExt) ,tb, conds_ini);
 
 %% Tratamento dos resultados
 pos = y(:,1);
