@@ -141,12 +141,20 @@ tb = t0:Ts:tf-Ts; % Tempo-base (o solver abaixo gera o vetor tempo t)
     fiInt,fiExt) ,tb, conds_ini);
 
 %% Tratamento dos resultados
-pos = y(:,1);
-vel = [diff(pos)/Ts; 0];
-acc = [diff(vel)/Ts; 0];
+resultados = struct('pos',{},'vel',{},'acc',{});
+resultados(3).pos = [];
+parfor i=1:3
+    resultados(i).pos = y(:,i); 
+    resultados(i).vel = [diff(resultados(i).pos)./Ts; 0]; 
+    resultados(i).acc = [diff(resultados(i).vel)./Ts; 0]; 
+end
+
+ext = resultados(1);
+esf = resultados(2);
+int = resultados(3);
 
 % Determinacao de parametros para o espectro de frequencias
-Y = fft(pos);
+Y = fft(ext.pos);
 L = length(y);
 P2 = abs(Y/L);
 P1 = P2(1:L/2+1);
@@ -166,21 +174,21 @@ figure(2)
 xlimTempo = [0 0.5];
 ylimTempo = 'auto';
 subplot(3,1,1);
-plot(t,pos);
+plot(t,ext.pos);
 title('Deslocamento','Interpreter','latex');
 ylabel('[m]','Interpreter','latex');
 xlim(xlimTempo);
 ylim(ylimTempo);
 
 subplot(3,1,2);
-plot(t,vel);
+plot(t,ext.vel);
 title('Velocidade','Interpreter','latex');
 ylabel('[m/s]','Interpreter','latex');
 xlim(xlimTempo);
 ylim(ylimTempo);
 
 subplot(3,1,3);
-plot(t,acc);
+plot(t,ext.acc);
 title('Acelera\c{c}\~ao','Interpreter','latex');
 ylabel('[m/s^{2}]','Interpreter','latex');
 xlim(xlimTempo);
