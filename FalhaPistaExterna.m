@@ -1,61 +1,7 @@
 % Calcula a vibracao em um rolamento com dano pontual na pista externa.
 
 %% Entrada de dados
-t0 = 0; % Instante inicial
-tf = 4; % Instante final
-Fs = 50e3; % Frequencia de amostragem do sinal, hertz
-N = 1800; % Velocidade de rotacao, em revolucoes por minuto
-
-% Dados do rolamento - 6004 2RSH
-Db = 6.35e-3; % Diametro das esferas, metros
-Nb = 9; % Numero de esferas
-m_b = 1.05e-3; % Massa de cada esfera, kg
-alpha = 0; % Angulo de contato do rolamento
-c_r = 7e-6; % Folga radial (radial clearance), metros
-E = 200e9; % Modulo de elasticidade do aco dos aneis e esferas, Pa
-ni = 0.3; % Coeficiente de Poisson para aneis e esferas
-rolos = false; % Rolamento eh de rolos?
-
-% Propriedades do anel interno do rolamento
-anelInt.D = 20e-3; % Diametro interno da pista interna, metros
-anelInt.D2 = 24.65e-3; % Diametro externo da pista interna, metros
-anelInt.m = 0.022; % Massa, kg
-anelInt.mu = 0.301; % Massa linear, kg/m
-anelInt.I = 37.424e-12; % Momento de inercia, m^4
-anelInt.Rneu = 11.65e-3; % Raio da linha neutra, m
-anelInt.rx = 12.32e-3; % Raio de curvatura no eixo X, m
-anelInt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
-
-% Propriedades do anel externo do rolamento
-anelExt.D = 42e-3; % Diametro externo da pista externa, metros
-anelExt.D2 = 37.19e-3; % Diametro interno da pista externa, metros
-anelExt.m = 0.035; % Massa, kg
-anelExt.mu = 0.289; % Massa linear, kg/m
-anelExt.I = 31.802e-12; % Momento de inercia, m^4
-anelExt.Rneu = 19.43e-3; % Raio da linha neutra, m
-anelExt.rx = 18.68e-3; % Raio de curvatura no eixo X, m
-anelExt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
-
-% Propriedades do lubrificante - ISO VG 32 @ 40°C
-visc = 32e-6; % Viscosidade cinematica, m^2/s (1 m^2/s = 10^6 centistokes)
-rho = 861; % Massa especifica, kg/m^3
-% Filme de fluido entre anel interno e esfera
-fiInt.k = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
-fiInt.n = 1.388; % Expoente para calculo da forca de restauracao
-fiInt.Fs = 4.023; % Forca constante de sustentacao, N
-fiInt.c = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
-% Filme de fluido entre anel externo e esfera
-fiExt.k = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
-fiExt.n = 1.388; % Expoente para calculo da forca de restauracao
-fiExt.Fs = 4.023; % Forca constante de sustentacao, N
-fiExt.c = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
-
-% Propriedades do defeito e carregamento
-Cmax = 100; % Carga maxima aplicada no eixo, newtons
-theta = 0; % Angulo entre a carga e o defeito na pista externa
-d_def = 0.1e-3; % Tamanho do defeito, metros
-da = 0; % Deslocamento axial provocado pelo defeito, metros
-dr = 1e-3; % Deslocamento radial provocado pelo defeito, metros
+GerarDadosEntrada;
 
 %% Propriedades derivadas do rolamento
 c_d = 2*c_r; % Folga diametral (diametral clearance), metros
@@ -94,7 +40,7 @@ parfor i=1:2
 end
 
 Eef = E/(1-ni^2);
-wz_max = ObterCargaMaximaEsfera(Cmax,Nb,c_d,Eef,R,IF,IE,k);
+wz_max = ObterCargaMaximaEsfera(wz,Nb,c_d,Eef,R,IF,IE,k);
 
 %% Montagem das matrizes do sistema
 M = [anelExt.m      0       0; ...
