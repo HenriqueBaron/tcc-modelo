@@ -156,9 +156,9 @@ f = (0:L/2)*(Fs/L);
 %% Exibicao dos resultados
 figure(1);
 plot(t,fImpacto(t));
-title('Perfil dos impulsos de impacto');
-xlabel('Tempo [s]');
-ylabel('Força [N]');
+title('Perfil dos impulsos de impacto','Interpreter','latex');
+xlabel('Tempo [s]','Interpreter','latex');
+ylabel('For\c{c}a [N]','Interpreter','latex');
 xlim([0 0.1]);
 ylim('auto');
 
@@ -167,26 +167,26 @@ xlimTempo = [0 0.5];
 ylimTempo = 'auto';
 subplot(3,1,1);
 plot(t,pos);
-title('Deslocamento');
-ylabel('[m]');
+title('Deslocamento','Interpreter','latex');
+ylabel('[m]','Interpreter','latex');
 xlim(xlimTempo);
 ylim(ylimTempo);
 
 subplot(3,1,2);
 plot(t,vel);
-title('Velocidade');
-ylabel('[m/s]');
+title('Velocidade','Interpreter','latex');
+ylabel('[m/s]','Interpreter','latex');
 xlim(xlimTempo);
 ylim(ylimTempo);
 
 subplot(3,1,3);
 plot(t,acc);
-title('Aceleracao');
-ylabel('[m^2/s]');
+title('Acelera\c{c}\~ao','Interpreter','latex');
+ylabel('[m/s^{2}]','Interpreter','latex');
 xlim(xlimTempo);
 ylim(ylimTempo);
 
 figure(3)
 plot(f,P1);
-title('Espectro de frequencias');
-xlabel('Frequencia [Hz]');
+title('Espectro de frequ\^encias','Interpreter','latex');
+xlabel('Frequ\^encia [Hz]','Interpreter','latex');
