@@ -4,10 +4,10 @@
 GerarDadosEntrada;
 
 wzPts = 50:50:200;
-c_r = 0:1e-7:9.5e-6;
+c_r = 0:1e-7:20e-6;
 res = struct('c_r',[],'wz_max',[]);
 res(length(wzPts)).c_r = [];
-for i=1:length(res)
+parfor i=1:length(res)
     wz = wzPts(i);
     
     wz_max = zeros(1,length(c_r));
@@ -42,6 +42,17 @@ end
 
 figure();
 hold on;
+labels = {'$\rm w_z=50\ N$'  '$\rm w_z=100\ N$' ... 
+    '$\rm w_z=150\ N$'  '$\rm w_z=200\ N$'};
 for i=1:length(res)
     plot(res(i).c_r,real(res(i).wz_max));
+    xarr = res(i).c_r;
+    yarr = real(res(i).wz_max);
+    xpt = xarr(floor(length(xarr)/2));
+    ypt = yarr(floor(length(yarr)/2)) + 3;
+    text(xpt,ypt,labels{i},'Interpreter','latex', ...
+        'HorizontalAlignment','right',...
+        'FontSize',10);
 end
+xlabel("$\rm c_d\ [m]$",'Interpreter','latex')
+ylabel("$\rm w_{z,max}\ [N]$",'Interpreter','latex')
