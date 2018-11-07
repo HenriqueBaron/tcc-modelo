@@ -7,7 +7,7 @@ c_r = 0:1e-7:9.5e-6;
 wz_max = zeros(1,length(c_r));
 
 parfor i=1:length(c_r)
-    c_d = 2*c_r(i); % Folga diametral (diametral clearance), metgitros
+    c_d = 2*c_r(i); % Folga diametral (diametral clearance), metros
     % O raio das esferas e calculado considerando a folga diametral. Ele eh
     % portanto menor do que o valor nominal fornecido.
     rb = (anelExt.D2 - anelInt.D2 - c_d)/4;
