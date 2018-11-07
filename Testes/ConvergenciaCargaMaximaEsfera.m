@@ -3,26 +3,45 @@
 %% Entrada de dados
 GerarDadosEntrada;
 
+wzPts = 50:50:200;
 c_r = 0:1e-7:9.5e-6;
-wz_max = zeros(1,length(c_r));
+res = struct('c_r',[],'wz_max',[]);
+res(length(wzPts)).c_r = [];
+for i=1:length(res)
+    wz = wzPts(i);
+    
+    wz_max = zeros(1,length(c_r));
+    
+    j = 0;
+    while j < length(c_r)
+        j = j + 1;
+        c_d = 2*c_r(j); % Folga diametral (diametral clearance), metros
+        % O raio das esferas e calculado considerando a folga diametral. Ele eh
+        % portanto menor do que o valor nominal fornecido.
+        rb = (anelExt.D2 - anelInt.D2 - c_d)/4;
 
-parfor i=1:length(c_r)
-    c_d = 2*c_r(i); % Folga diametral (diametral clearance), metros
-    % O raio das esferas e calculado considerando a folga diametral. Ele eh
-    % portanto menor do que o valor nominal fornecido.
-    rb = (anelExt.D2 - anelInt.D2 - c_d)/4;
+        [Rx,Ry,R,Rd,IF,IE,k] = deal(zeros(2,1));
+        aneis = [anelInt anelExt];
 
-    [Rx,Ry,R,Rd,IF,IE,k] = deal(zeros(2,1));
-    aneis = [anelInt anelExt];
+        for u=1:2
+            [Rx(u),Ry(u),R(u),Rd(u)] = RaiosCurvatura(rb,rb,aneis(u).rx,aneis(u).ry);
+            [IF(u),IE(u),k(u)] = ParametrosElipseContato(Rd(u));
+        end
 
-    for j=1:2
-        [Rx(j),Ry(j),R(j),Rd(j)] = RaiosCurvatura(rb,rb,aneis(j).rx,aneis(j).ry);
-        [IF(j),IE(j),k(j)] = ParametrosElipseContato(Rd(j));
+        Eef = E/(1-ni^2);
+
+        wz_max(j) = ObterCargaMaximaEsfera(wz,Nb,c_d,Eef,R,IF,IE,k);
+        if imag(wz_max(j)) ~= 0
+            break;
+        end
     end
-
-    Eef = E/(1-ni^2);
-
-    wz_max(i) = ObterCargaMaximaEsfera(wz,Nb,c_d,Eef,R,IF,IE,k);
+    
+    res(i).c_r = c_r(1:j);
+    res(i).wz_max = wz_max(1:j);
 end
 
-plot(c_r,real(wz_max))
+figure();
+hold on;
+for i=1:length(res)
+    plot(res(i).c_r,real(res(i).wz_max));
+end
