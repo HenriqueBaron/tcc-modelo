@@ -20,8 +20,9 @@ fun = @(psi,C) (cos(psi)-C).^(3/2).*cos(psi);
 wz_max = wz;
 Zw = 5;
 Zw_ant = 0;
-
-while abs(Zw - Zw_ant) > 1e-7
+tol = 100;
+m = 0;
+while abs(Zw - Zw_ant) > 1e-7 && m < tol
 for i=1:2
     % Determina a deformação elástica máxima no contato
     delta(i) = DeformacaoElastica(wz_max,Eef,R(i),IF(i),IE(i),k(i));
@@ -36,6 +37,7 @@ intFun = integral(@(psi)fun(psi,cd/(2*delta_m)),0,psi_l);
 Zw = pi*(1-cd/(2*delta_m))^(3/2)/intFun;
 wz_max = wz*Zw/n;
 
+m = m + 1;
 end
 
 end
