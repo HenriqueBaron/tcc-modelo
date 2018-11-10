@@ -11,7 +11,7 @@ Dp = (anelExt.D + anelInt.D)/2; % Pitch diameter, metros
 rb = (anelExt.D2 - anelInt.D2 - c_d)/4;
 
 % Velocidades angulares dos aneis interno e externo
-% Como os rolamentos são embutidos no mancal, a velocidade angular do
+% Como os rolamentos sao embutidos no mancal, a velocidade angular do
 % anel externo e sempre nula.
 anelInt.omega = N*pi/30;
 anelExt.omega = 0;
@@ -20,7 +20,7 @@ anelExt.omega = 0;
 BPFO = Nb/2*(anelInt.omega-anelExt.omega)*(1-cos(alpha)*Db/Dp);
 
 % Frequencias naturais - aneis externo e interno
-% Segundo modo de vibração do anel considerado
+% Segundo modo de vibracao do anel considerado
 FreqNatural = @(n,E,I,mu,R) n*(n^2-1)/sqrt(1+n^2)*sqrt(E*I/(mu*R^4));
 anelExt.omega_n = FreqNatural(2,E,anelExt.I,anelExt.mu,anelExt.Rneu);
 anelInt.omega_n = FreqNatural(2,E,anelInt.I,anelInt.mu,anelInt.Rneu);
@@ -29,13 +29,14 @@ anelInt.omega_n = FreqNatural(2,E,anelInt.I,anelInt.mu,anelInt.Rneu);
 anelExt.k = anelExt.m*anelExt.omega_n^2;
 anelInt.k = anelInt.m*anelInt.omega_n^2;
 
-%% Parâmetros do contato entre as superficies
+%% Parametros do contato entre as superficies
 [Rx,Ry,R,Rd,IF,IE,k] = deal(zeros(2,1));
 
 aneis = [anelInt anelExt];
 
 parfor i=1:2
-    [Rx(i),Ry(i),R(i),Rd(i)] = RaiosCurvatura(rb,rb,aneis(i).rx,aneis(i).ry);
+    [Rx(i),Ry(i),R(i),Rd(i)] = RaiosCurvatura(rb,rb,...
+        aneis(i).rx,aneis(i).ry);
     [IF(i),IE(i),k(i)] = ParametrosElipseContato(Rd(i));
 end
 

@@ -1,6 +1,6 @@
 function [ h ] = EspessuraFilmeLub(dp,db,Rx,k,omega,wz,Eef,eta,ksi)
 %ESPESSURAFILMELUB Calcula a espessura do filme de lubrificante.
-%   Determina a espessura filme de lubrificante no rolamento atrves da
+%   Determina a espessura filme de lubrificante no rolamento atraves da
 %   teoria elastohidrodinamica (EHD), utilizando uma simplificacao por
 %   fatores adimensionais.
 %   PARAMETROS DE ENTRADA

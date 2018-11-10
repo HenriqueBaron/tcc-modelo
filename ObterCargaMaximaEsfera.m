@@ -9,8 +9,8 @@ function [ wz_max ] = ObterCargaMaximaEsfera( wz, n, cd, Eef, R, IF, IE, k )
 %   cd - Folga diametral, m
 %   Eef - Modulo de elasticidade efetivo, Pa
 %   R - Somas de curvatura, pistas interna e externa
-%   IF - Integrais elípticas de primeira ordem, pistas interna e externa
-%   IE - Integrais elípticas de segunda ordem, pistas interna e externa
+%   IF - Integrais elipticas de primeira ordem, pistas interna e externa
+%   IE - Integrais elipticas de segunda ordem, pistas interna e externa
 %   k - Fatores de elipticidade, pistas interna e externa
 
 delta = deal(zeros(2,1));
@@ -24,7 +24,7 @@ tol = 100;
 m = 0;
 while abs(Zw - Zw_ant) > 1e-7 && m < tol
 for i=1:2
-    % Determina a deformação elástica máxima no contato
+    % Determina a deformacao elastica maxima no contato
     delta(i) = DeformacaoElastica(wz_max,Eef,R(i),IF(i),IE(i),k(i));
 end
 
