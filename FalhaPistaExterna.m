@@ -90,7 +90,7 @@ tb = t0:Ts:tf-Ts; % Tempo-base (o solver abaixo gera o vetor tempo t)
 %% Tratamento dos resultados
 resultados = struct('pos',{},'vel',{},'acc',{});
 resultados(3).pos = [];
-parfor i=1:3
+for i=1:3
     resultados(i).pos = y(:,i); 
     resultados(i).vel = [diff(resultados(i).pos)./Ts; 0]; 
     resultados(i).acc = [diff(resultados(i).vel)./Ts; 0]; 
