@@ -36,6 +36,7 @@ anelExt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
 % Propriedades do lubrificante - ISO VG 32 @ 40°C
 visc = 32e-6; % Viscosidade cinematica, m^2/s (1 m^2/s = 10^6 centistokes)
 rho = 861; % Massa especifica, kg/m^3
+z = 0.75; % Indice de viscosidade-pressao de oleos minerais
 % Filme de fluido entre anel interno e esfera
 fiInt.k = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
 fiInt.n = 1.388; % Expoente para calculo da forca de restauracao
