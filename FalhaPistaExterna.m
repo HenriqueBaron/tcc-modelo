@@ -69,14 +69,15 @@ fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2;
 F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
 %% Definicao de condicoes iniciais
-
 % As condicoes de posicao inicial correspondem a espessura do filme
-eta = visc*rho;
+
+eta = visc*rho; % Viscosidade absoluta
+coefVisc = z*(ln(eta) + 9.67)/1.96e8; % Coeficiente de viscosidade-pressao
 
 h = EspessuraFilmeLub(Dp,Db,Rx,k,[aneis.omega],wz_max,Eef, ...
-    eta,2.3e-8);
+    eta,coefVisc);
 
-conds_ini = [0; h(2); sum(h); 0; 0; 0];
+conds_ini = [0; h(2); h(1); 0; 0; 0];
 
 %% Resolucao do sistema
 % Montagem do vetor tempo para os dados de saida
