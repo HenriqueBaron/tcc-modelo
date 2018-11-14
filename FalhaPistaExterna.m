@@ -72,7 +72,7 @@ F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 % As condicoes de posicao inicial correspondem a espessura do filme
 
 eta = visc*rho; % Viscosidade absoluta
-coefVisc = z*(ln(eta) + 9.67)/1.96e8; % Coeficiente de viscosidade-pressao
+coefVisc = z*(log(eta) + 9.67)/1.96e8; % Coeficiente de viscosidade-pressao
 
 h = EspessuraFilmeLub(Dp,Db,Rx,k,[aneis.omega],wz_max,Eef, ...
     eta,coefVisc);
