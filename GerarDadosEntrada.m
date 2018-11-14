@@ -38,12 +38,12 @@ visc = 32e-6; % Viscosidade cinematica, m^2/s (1 m^2/s = 10^6 centistokes)
 rho = 861; % Massa especifica, kg/m^3
 z = 0.74; % Indice de viscosidade-pressao de oleos minerais
 % Filme de fluido entre anel interno e esfera
-fiInt.k = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
+fiInt.k = 68.3e-8; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
 fiInt.n = 1.388; % Expoente para calculo da forca de restauracao
 fiInt.Fs = 4.023; % Forca constante de sustentacao, N
 fiInt.c = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
 % Filme de fluido entre anel externo e esfera
-fiExt.k = 68.3; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
+fiExt.k = 68.3e-8; % Rigidez do filme de fluido a 1800 RPM, N/m^nf
 fiExt.n = 1.388; % Expoente para calculo da forca de restauracao
 fiExt.Fs = 4.023; % Forca constante de sustentacao, N
 fiExt.c = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
