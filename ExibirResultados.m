@@ -1,17 +1,15 @@
-figure(1);
+figure('Name','Perfil dos impulsos de impacto','NumberTitle','off');
 plot(t,fImpacto(t));
-title('Perfil dos impulsos de impacto','Interpreter','latex');
 xlabel('Tempo $\rm [s]$','Interpreter','latex');
 ylabel('For\c{c}a $\rm [N]$','Interpreter','latex');
 xlim([0 0.1]);
 ylim('auto');
 
-fig = figure(2);
+fig = figure('Name','Anel externo','NumberTitle','off');
 xlimTempo = [0 0.5];
 ylimTempo = 'auto';
 subplot(3,1,1);
 plot(t,ext.pos);
-title('Anel externo','Interpreter','latex');
 ylabel('Deslocamento $\rm [m]$','Interpreter','latex');
 xlim(xlimTempo);
 ylim(ylimTempo);
@@ -30,12 +28,11 @@ xlim(xlimTempo);
 ylim(ylimTempo);
 fig.WindowState = 'maximized';
 
-fig = figure(3);
+fig = figure('Name','Esfera','NumberTitle','off');
 xlimTempo = [0 0.5];
 ylimTempo = 'auto';
 subplot(3,1,1);
 plot(t,esf.pos);
-title('Esfera','Interpreter','latex');
 ylabel('Deslocamento $\rm [m]$','Interpreter','latex');
 xlim(xlimTempo);
 ylim(ylimTempo);
@@ -54,12 +51,11 @@ xlim(xlimTempo);
 ylim(ylimTempo);
 fig.WindowState = 'maximized';
 
-fig = figure(4);
+fig = figure('Name','Anel interno','NumberTitle','off');
 xlimTempo = [0 0.5];
 ylimTempo = 'auto';
 subplot(3,1,1);
 plot(t,int.pos);
-title('Anel interno','Interpreter','latex');
 ylabel('Deslocamento $\rm [m]$','Interpreter','latex');
 xlim(xlimTempo);
 ylim(ylimTempo);
@@ -78,8 +74,7 @@ xlim(xlimTempo);
 ylim(ylimTempo);
 fig.WindowState = 'maximized';
 
-figure(5)
+figure('Name','Espectro de frequencias','NumberTitle','off')
 plot(f,P1);
-title('Espectro de frequ\^encias','Interpreter','latex');
 xlabel('Frequ\^encia $\rm [Hz]$','Interpreter','latex');
 ylabel('Deslocamento $\rm [m]$','Interpreter','latex');
