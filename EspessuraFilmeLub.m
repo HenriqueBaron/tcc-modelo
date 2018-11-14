@@ -1,4 +1,4 @@
-function [ h ] = EspessuraFilmeLub(dp,db,Rx,k,omega,wz,Eef,eta,ksi)
+function [ h ] = EspessuraFilmeLub(dp,db,Rx,k,omega,wz,Eef,eta,xi)
 %ESPESSURAFILMELUB Calcula a espessura do filme de lubrificante.
 %   Determina a espessura filme de lubrificante no rolamento atraves da
 %   teoria elastohidrodinamica (EHD), utilizando uma simplificacao por
@@ -12,21 +12,25 @@ function [ h ] = EspessuraFilmeLub(dp,db,Rx,k,omega,wz,Eef,eta,ksi)
 %   wz - Carga radial, N
 %   Eef - Modulo de elasticidade efetivo, Pa
 %   eta - Viscosidade absoluta, N*s/m^2
-%   ksi - Coeficiente de viscosidade-pressao, m^2/N
+%   xi - Coeficiente de viscosidade-pressao, m^2/N
 
 % Inicializacao dos vetores
 [U, G, W, h] = deal(zeros(1,2));
 
-% Velocidade de escoamento
-u = abs(omega(2)-omega(1))*(dp^2-db^2)/(4*dp);
+omega_b = sum(omega); % Velocidade angular da esfera
+ub = omega_b*db/2; % Velocidade de superficie (tangencial) da esfera
+% Somas de velocidades
+us(1) = omega(1)*(dp-db)/2 + ub;
+us(2) = omega(2)*(dp+db)/2 + ub;
 
 for i=1:2
     % Parametros adimensionais de velocidade, material e carga das pistas
-    U(i) = eta*u/(Eef*10^6*Rx(i)/1000);
-    G(i) = ksi*Eef*10^6;
-    W(i) = wz/(Eef*10^6*(Rx(i)/1000)^2);
+    U(i) = eta*us(i)/(2*Eef*Rx(i));
+    G(i) = xi*Eef;
+    W(i) = wz/(Eef*Rx(i)^2);
     
-    h(i) = 3.63*U(i)^0.68*G(i)^0.49*W(i)^-0.073*(1-exp(-0.68*k(i)))*Rx(i);
+    h(i) = 2.69*U(i)^0.67*G(i)^0.53*W(i)^-0.067*...
+        (1-0.61*exp(-0.73*k(i)))*Rx(i);
 end
 
 end
