@@ -40,7 +40,7 @@ parfor i=1:length(res)
     res(i).wz_max = wz_max(1:j);
 end
 
-figure();
+figure('Name','Convergencia carga maxima esfera','NumberTitle','off')
 hold on;
 labels = {'$\rm w_z=50\ N$'  '$\rm w_z=100\ N$' ... 
     '$\rm w_z=150\ N$'  '$\rm w_z=200\ N$'};
@@ -52,7 +52,7 @@ for i=1:length(res)
     ypt = yarr(floor(length(yarr)/2)) + 3;
     text(xpt,ypt,labels{i},'Interpreter','latex', ...
         'HorizontalAlignment','right',...
-        'FontSize',10);
+        'FontSize',12);
 end
-xlabel("$\rm c_d\ [m]$",'Interpreter','latex')
-ylabel("$\rm w_{z,max}\ [N]$",'Interpreter','latex')
+xlabel("$\rm c_d\ [m]$",'Interpreter','latex','FontSize',12)
+ylabel("$\rm (w_z)_{max}\ [N]$",'Interpreter','latex','FontSize',12)
