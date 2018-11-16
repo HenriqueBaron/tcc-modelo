@@ -54,5 +54,5 @@ for i=1:length(res)
         'HorizontalAlignment','right',...
         'FontSize',12);
 end
-xlabel("$\rm c_d\ [m]$",'Interpreter','latex','FontSize',12)
+xlabel("$\rm c_d/2\ [m]$",'Interpreter','latex','FontSize',12)
 ylabel("$\rm (w_z)_{max}\ [N]$",'Interpreter','latex','FontSize',12)
