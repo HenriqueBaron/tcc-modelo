@@ -36,8 +36,8 @@ parfor i=1:length(res)
         end
     end
     
-    res(i).c_r = c_r(1:j);
-    res(i).wz_max = wz_max(1:j);
+    res(i).c_r = c_r(1:j-1);
+    res(i).wz_max = wz_max(1:j-1);
 end
 
 figure('Name','Convergencia carga maxima esfera','NumberTitle','off')
@@ -45,9 +45,9 @@ hold on;
 labels = {'$\rm w_z=50\ N$'  '$\rm w_z=100\ N$' ... 
     '$\rm w_z=150\ N$'  '$\rm w_z=200\ N$'};
 for i=1:length(res)
-    plot(res(i).c_r,real(res(i).wz_max));
+    plot(res(i).c_r,res(i).wz_max);
     xarr = res(i).c_r;
-    yarr = real(res(i).wz_max);
+    yarr = res(i).wz_max;
     xpt = xarr(floor(length(xarr)/2));
     ypt = yarr(floor(length(yarr)/2)) + 3;
     text(xpt,ypt,labels{i},'Interpreter','latex', ...
