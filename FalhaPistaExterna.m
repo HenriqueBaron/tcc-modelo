@@ -83,7 +83,7 @@ Ts = 1/Fs; % Periodo da amostra
 tb = t0:Ts:tf-Ts; % Tempo-base (o solver abaixo gera o vetor tempo t)
 
 % Resolucao das ODEs
-[t, y] = ode45(@(t,y) SisNaoLinOrdem2(t,y,M,C,Klin,KfInt,KfExt,F(t),...
+[t, y] = ode113(@(t,y) SisNaoLinOrdem2(t,y,M,C,Klin,KfInt,KfExt,F(t),...
     fiInt,fiExt) ,tb, conds_ini);
 
 %% Tratamento dos resultados
