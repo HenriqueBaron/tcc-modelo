@@ -1,4 +1,4 @@
-function dydt = SisNaoLinOrdem2(t, y, M, C, Klin, KfInt, KfExt, F, ...
+function dydt = SisNaoLinOrdem2(~, y, M, C, Klin, KfInt, KfExt, F, ...
     fiInt, fiExt)
 %SISLINORDEM2 Monta um vetor de EDOs de ordem 2 para sistema de vibracao.
 %   Utiliza as matrizes de massa, amortecimento, rigidezes e forca externa
@@ -64,5 +64,4 @@ dydtVel = M\(F - C*yVel - Klin*yPos - ...
 
 dydt = [dydtPos; dydtVel];
 
-disp(t);
 end
