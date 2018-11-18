@@ -3,6 +3,7 @@ exibirAnelExt = true;
 exibirEsfera = true;
 exibirAnelInt = true;
 exibirEspectroPos = true;
+exibirEnvSpecAcc = true;
 
 if exibirImpactos == 1
     figure('Name','Perfil dos impulsos de impacto','NumberTitle','off');
@@ -93,4 +94,11 @@ if exibirEspectroPos == 1
     plot(f,P1);
     xlabel('Frequ\^encia $\rm [Hz]$','Interpreter','latex');
     ylabel('Deslocamento $\rm [m]$','Interpreter','latex');
+end
+
+if exibirEnvSpecAcc == 1
+    figure('Name','Espectro de envelope','NumberTitle','off')
+    plot(f,envspectrum(ext.acc,Fs));
+    xlabel('Frequ\^encia $\rm [Hz]$','Interpreter','latex');
+    ylabel('Acelera\c{c}\~ao $\rm [m/s^2]$','Interpreter','latex');
 end
