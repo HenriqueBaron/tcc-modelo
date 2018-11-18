@@ -1,7 +1,7 @@
-exibirImpactos = true;
+exibirImpactos = false;
 exibirAnelExt = true;
-exibirEsfera = true;
-exibirAnelInt = true;
+exibirEsfera = false;
+exibirAnelInt = false;
 exibirEspectroAcc = true;
 exibirEnvSpecAcc = true;
 
