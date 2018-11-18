@@ -5,7 +5,7 @@ exibirAnelInt = true;
 exibirEspectroAcc = true;
 exibirEnvSpecAcc = true;
 
-if exibirImpactos == 1
+if exibirImpactos
     figure('Name','Perfil dos impulsos de impacto','NumberTitle','off');
     plot(t,fImpacto(t));
     xlabel('Tempo $\rm [s]$','Interpreter','latex');
@@ -14,7 +14,7 @@ if exibirImpactos == 1
     ylim('auto');
 end
 
-if exibirAnelExt == 1
+if exibirAnelExt
     fig = figure('Name','Anel externo','NumberTitle','off');
     xlimTempo = [0 0.5];
     ylimTempo = 'auto';
@@ -39,7 +39,7 @@ if exibirAnelExt == 1
     fig.WindowState = 'maximized';
 end
 
-if exibirEsfera == 1
+if exibirEsfera
     fig = figure('Name','Esfera','NumberTitle','off');
     xlimTempo = [0 0.5];
     ylimTempo = 'auto';
@@ -64,7 +64,7 @@ if exibirEsfera == 1
     fig.WindowState = 'maximized';
 end
 
-if exibirAnelInt == 1
+if exibirAnelInt
     fig = figure('Name','Anel interno','NumberTitle','off');
     xlimTempo = [0 0.5];
     ylimTempo = 'auto';
