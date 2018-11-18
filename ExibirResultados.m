@@ -1,5 +1,6 @@
 exibirImpactos = false;
-exibirAnelExt = true;
+exibirAnelExtPos = true;
+exibirAnelExt = false;
 exibirEsfera = false;
 exibirAnelInt = false;
 exibirEspectroAcc = true;
@@ -11,6 +12,15 @@ if exibirImpactos
     xlabel('Tempo $\rm [s]$','Interpreter','latex');
     ylabel('For\c{c}a $\rm [N]$','Interpreter','latex');
     xlim([0 0.1]);
+    ylim('auto');
+end
+
+if exibirAnelExtPos
+    figure('Name','Deslocamento anel externo','NumberTitle','off');
+    plot(t,ext.pos);
+    xlabel('Tempo $\rm [s]$','Interpreter','latex');
+    ylabel('Deslocamento $\rm [m]$','Interpreter','latex');
+    xlim([0 0.5]);
     ylim('auto');
 end
 
