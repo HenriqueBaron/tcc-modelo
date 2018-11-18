@@ -94,6 +94,8 @@ if exibirEspectroPos == 1
     plot(f,P1);
     xlabel('Frequ\^encia $\rm [Hz]$','Interpreter','latex');
     ylabel('Deslocamento $\rm [m]$','Interpreter','latex');
+    xlim([0 1e4]);
+    ylim('auto');
 end
 
 if exibirEnvSpecAcc == 1
@@ -101,4 +103,6 @@ if exibirEnvSpecAcc == 1
     plot(f,envspectrum(ext.acc,Fs));
     xlabel('Frequ\^encia $\rm [Hz]$','Interpreter','latex');
     ylabel('Acelera\c{c}\~ao $\rm [m/s^2]$','Interpreter','latex');
+    xlim([0 1e4]);
+    ylim('auto');
 end
