@@ -2,7 +2,7 @@ exibirImpactos = true;
 exibirAnelExt = true;
 exibirEsfera = true;
 exibirAnelInt = true;
-exibirEspectroPos = true;
+exibirEspectroAcc = true;
 exibirEnvSpecAcc = true;
 
 if exibirImpactos == 1
@@ -89,11 +89,11 @@ if exibirAnelInt == 1
     fig.WindowState = 'maximized';
 end
 
-if exibirEspectroPos == 1
+if exibirEspectroAcc == 1
     figure('Name','Espectro de frequencias','NumberTitle','off')
     plot(f,P1);
     xlabel('Frequ\^encia $\rm [Hz]$','Interpreter','latex');
-    ylabel('Deslocamento $\rm [m]$','Interpreter','latex');
+    ylabel('Acelera\c{c}\~ao $\rm [m/s^2]$','Interpreter','latex');
     xlim([0 1e4]);
     ylim('auto');
 end

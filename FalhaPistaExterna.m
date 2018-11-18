@@ -102,7 +102,7 @@ esf = resultados(2);
 int = resultados(3);
 
 % Determinacao de parametros para o espectro de frequencias
-Y = fft(ext.pos);
+Y = fft(ext.acc);
 L = length(y);
 P2 = abs(Y/L);
 P1 = P2(1:L/2+1);
