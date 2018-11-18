@@ -89,7 +89,17 @@ if exibirAnelInt == 1
     fig.WindowState = 'maximized';
 end
 
-if exibirEspectroAcc == 1
+if exibirEspectroAcc || exibirEnvSpecAcc
+    % Determinacao de parametros para os espectros
+    Y = fft(ext.acc);
+    L = length(y);
+    f = (0:L/2)*(Fs/L);
+end
+
+if exibirEspectroAcc
+    P2 = abs(Y/L);
+    P1 = P2(1:L/2+1);
+    P1(2:end-1) = 2*P1(2:end-1);
     figure('Name','Espectro de frequencias','NumberTitle','off')
     plot(f,P1);
     xlabel('Frequ\^encia $\rm [Hz]$','Interpreter','latex');
@@ -98,7 +108,7 @@ if exibirEspectroAcc == 1
     ylim('auto');
 end
 
-if exibirEnvSpecAcc == 1
+if exibirEnvSpecAcc
     figure('Name','Espectro de envelope','NumberTitle','off')
     plot(f,envspectrum(ext.acc,Fs));
     xlabel('Frequ\^encia $\rm [Hz]$','Interpreter','latex');

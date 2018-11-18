@@ -101,13 +101,5 @@ ext = resultados(1);
 esf = resultados(2);
 int = resultados(3);
 
-% Determinacao de parametros para o espectro de frequencias
-Y = fft(ext.acc);
-L = length(y);
-P2 = abs(Y/L);
-P1 = P2(1:L/2+1);
-P1(2:end-1) = 2*P1(2:end-1);
-f = (0:L/2)*(Fs/L);
-
 %% Exibicao dos resultados
 ExibirResultados;
