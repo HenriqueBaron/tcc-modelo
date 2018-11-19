@@ -20,7 +20,7 @@ if exibirAnelExtPos
     plot(t,ext.pos);
     xlabel('Tempo $\rm [s]$','Interpreter','latex');
     ylabel('Deslocamento $\rm [m]$','Interpreter','latex');
-    xlim([0 0.5]);
+    xlim([0 0.3]);
     ylim('auto');
 end
 
