@@ -33,7 +33,7 @@ anelExt.Rneu = 19.43e-3; % Raio da linha neutra, m
 anelExt.rx = 18.68e-3; % Raio de curvatura no eixo X, m
 anelExt.ry = 3.18e-3; % Raio de curvatura no eixo Y (groove), m
 
-% Propriedades do lubrificante - ISO VG 32 @ 40°C
+% Propriedades do lubrificante - ISO VG 32 @ 40 C
 visc = 32e-6; % Viscosidade cinematica, m^2/s (1 m^2/s = 10^6 centistokes)
 rho = 861; % Massa especifica, kg/m^3
 z = 0.74; % Indice de viscosidade-pressao de oleos minerais
