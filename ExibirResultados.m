@@ -25,7 +25,7 @@ if exibirAnelExtPos
 end
 
 if exibirAnelExt
-    fig = figure('Name','Anel externo','NumberTitle','off');
+    fig = figure('Name','Anel externo','NumberTitle','off'); %#ok<*UNRCH>
     xlimTempo = [0 0.5];
     ylimTempo = 'auto';
     subplot(3,1,1);
