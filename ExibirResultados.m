@@ -6,6 +6,7 @@ exibirAnelInt = false;
 exibirEspectroAcc = true;
 exibirEnvSpecAcc = true;
 
+%#ok<*UNRCH> Ignorar aviso de "Esta logica pode nao ser executada."
 if exibirImpactos
     figure('Name','Perfil dos impulsos de impacto','NumberTitle','off');
     plot(t,fImpacto(t));
@@ -25,7 +26,7 @@ if exibirAnelExtPos
 end
 
 if exibirAnelExt
-    fig = figure('Name','Anel externo','NumberTitle','off'); %#ok<*UNRCH>
+    fig = figure('Name','Anel externo','NumberTitle','off');
     xlimTempo = [0 0.5];
     ylimTempo = 'auto';
     subplot(3,1,1);
