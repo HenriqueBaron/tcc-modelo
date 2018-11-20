@@ -1,7 +1,7 @@
 %% Verifica e define configuracoes de exibicao
 VarExiste = @(var) exist(var,'var') == 1;
 if ~VarExiste('exibirImpactos')
-    exibirImpactos = false;
+    exibirImpactos = true;
 end
 if ~VarExiste('anelExtPos')
     exibirAnelExtPos = true;
