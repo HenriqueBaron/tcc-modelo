@@ -1,31 +1,13 @@
-%% Verifica e define configuracoes de exibicao
-VarExiste = @(var) exist(var,'var') == 1;
-if ~VarExiste('exibirImpactos')
-    exibirImpactos = true;
-end
-if ~VarExiste('anelExtPos')
-    exibirAnelExtPos = true;
-end
-if ~VarExiste('exibirAnelInt')
-    exibirAnelExt = false;
-end
-if ~VarExiste('exibirEsfera')
-    exibirEsfera = false;
-end
-if ~VarExiste('exibirAnelInt')
-    exibirAnelInt = false;
-end
-if ~VarExiste('exibirEspectroAcc')
-    exibirEspectroAcc = true;
-end
-if ~VarExiste('exibirEnvSpecAcc')
-    exibirEnvSpecAcc = true;
-end
+exibirImpactos = false;
+exibirAnelExtPos = true;
+exibirAnelExt = false;
+exibirEsfera = false;
+exibirAnelInt = false;
+exibirEspectroAcc = true;
+exibirEnvSpecAcc = true;
 
-%% Exibe os resultados
 if exibirImpactos
-    figure('Name','Perfil dos impulsos de impacto',...
-        'NumberTitle','off'); %#ok<*UNRCH>
+    figure('Name','Perfil dos impulsos de impacto','NumberTitle','off');
     plot(t,fImpacto(t));
     xlabel('Tempo $\rm [s]$','Interpreter','latex');
     ylabel('For\c{c}a $\rm [N]$','Interpreter','latex');
@@ -43,7 +25,7 @@ if exibirAnelExtPos
 end
 
 if exibirAnelExt
-    fig = figure('Name','Anel externo','NumberTitle','off');
+    fig = figure('Name','Anel externo','NumberTitle','off'); %#ok<*UNRCH>
     xlimTempo = [0 0.5];
     ylimTempo = 'auto';
     subplot(3,1,1);
