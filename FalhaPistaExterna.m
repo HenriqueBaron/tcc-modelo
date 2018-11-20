@@ -65,7 +65,11 @@ KfInt = [0      0       0; ...
          0     -1       1];
 
 % Referencias de funcao para definir a forca externa em cada instante
-fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2;
+if impulsoTriangular
+    fImpacto = @(t)wz_max*ImpulsosTriangulo(t,BPFO,0.00025);
+else
+    fImpacto = @(t)(wz_max*square(t*BPFO, 0.5) + wz_max)/2;
+end
 F = @(t)[fImpacto(t); 0; 0]; % Vetor de forcas - apenas na pista externa
 
 %% Definicao de condicoes iniciais

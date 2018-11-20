@@ -50,3 +50,5 @@ fiExt.c = 18.027; % Amortecimento do filme de fluido a 1800 RPM, N*s/m
 
 % Propriedades do defeito e carregamento
 wz = 100; % Carga maxima aplicada no eixo, newtons
+% Opta por impulsos triangulares em vez de retangulares
+impulsoTriangular = false;
