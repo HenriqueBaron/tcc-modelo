@@ -1,6 +1,6 @@
 function [delta] = DeformacaoElastica(wz,Eef,R,IF,IE,k)
 %DEFORMACAOELASTICA Calcula a deformacao elastica no contato da esfera.
-%   Calcula a deformação elástica no contato entre a esfera e a pista do
+%   Calcula a deformacao elastica no contato entre a esfera e a pista do
 %   rolamento, conforme a teoria hertziana de deformacao por contato.
 %   Parametros de entrada:
 %   wz - Carga radial, N

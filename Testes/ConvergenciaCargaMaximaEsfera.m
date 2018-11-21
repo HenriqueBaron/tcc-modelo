@@ -1,4 +1,4 @@
-% Script para teste de convergência da função ObterCargaMaximaEsfera.m
+% Script para teste de convergencia da funcao ObterCargaMaximaEsfera.m
 
 %% Entrada de dados
 GerarDadosEntrada;
