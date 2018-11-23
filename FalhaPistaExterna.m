@@ -17,7 +17,7 @@ anelInt.omega = N*pi/30;
 anelExt.omega = 0;
 
 % Ball Pass Frequency, Outer
-BPFO = Nb/2*(anelInt.omega-anelExt.omega)*(1-cos(alpha)*Db/Dp);
+BPFO = Nb/2*(anelInt.omega-anelExt.omega)*(1-cos(angContato)*Db/Dp);
 
 % Frequencias naturais - aneis externo e interno
 % Segundo modo de vibracao do anel considerado
