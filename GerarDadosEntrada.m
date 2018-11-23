@@ -1,6 +1,4 @@
 t0 = 0; % Instante inicial
-tf = 4; % Instante final
-Fs = 50e3; % Frequencia de amostragem do sinal, hertz
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH

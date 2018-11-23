@@ -1,6 +1,9 @@
+function [ext, esf, int, t] = FalhaPistaExterna(tf,Fs)
 % Calcula a vibracao em um rolamento com dano pontual na pista externa.
 
 %% Entrada de dados
+anelExt = struct;
+anelInt = struct;
 GerarDadosEntrada;
 
 %% Propriedades derivadas do rolamento
@@ -107,3 +110,4 @@ int = resultados(3);
 
 %% Exibicao dos resultados
 ExibirResultados;
+end
