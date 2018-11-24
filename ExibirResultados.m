@@ -9,7 +9,7 @@ exibirEnvSpecAcc = true;
 %#ok<*UNRCH> Ignorar aviso de "Esta logica pode nao ser executada."
 if exibirImpactos
     figure('Name','Perfil dos impulsos de impacto','NumberTitle','off');
-    plot(t,fImpacto(t));
+    plot(t,FImp);
     xlabel('Tempo $\rm [s]$','Interpreter','latex');
     ylabel('For\c{c}a $\rm [N]$','Interpreter','latex');
     xlim([0 0.1]);
