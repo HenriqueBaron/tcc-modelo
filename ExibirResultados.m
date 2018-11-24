@@ -103,7 +103,7 @@ end
 if exibirEspectroAcc || exibirEnvSpecAcc
     % Determinacao de parametros para os espectros
     Y = fft(ext.acc);
-    L = length(y);
+    L = length(ext.acc);
     f = (0:L/2)*(Fs/L);
 end
 
