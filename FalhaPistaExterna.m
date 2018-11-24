@@ -1,5 +1,7 @@
 function [resultados, FImp, t] = FalhaPistaExterna(tf,Fs)
-% Calcula a vibracao em um rolamento com dano pontual na pista externa.
+%FALHAPISTAEXTERNA Vibracao de rolamento com falha na pista externa.
+% Calcula a vibracao em um rolamento com dano pontual na pista externa,
+% podendo ajustar a duracao da simulacao e a frequencia de amostragem.
 
 %% Entrada de dados
 anelExt = struct;
