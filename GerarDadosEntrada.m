@@ -1,13 +1,11 @@
 t0 = 0; % Instante inicial
-tf = 4; % Instante final
-Fs = 50e3; % Frequencia de amostragem do sinal, hertz
 N = 1800; % Velocidade de rotacao, em revolucoes por minuto
 
 % Dados do rolamento - 6004 2RSH
 Db = 6.35e-3; % Diametro das esferas, metros
 Nb = 9; % Numero de esferas
 m_b = 1.05e-3; % Massa de cada esfera, kg
-alpha = 0; % Angulo de contato do rolamento
+angContato = 0; % Angulo de contato do rolamento
 c_r = 8e-6; % Folga radial (radial clearance), metros
 E = 200e9; % Modulo de elasticidade do aco dos aneis e esferas, Pa
 ni = 0.3; % Coeficiente de Poisson para aneis e esferas

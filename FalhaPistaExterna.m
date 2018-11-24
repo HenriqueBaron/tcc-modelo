@@ -1,6 +1,11 @@
-% Calcula a vibracao em um rolamento com dano pontual na pista externa.
+function [resultados, FImp, t] = FalhaPistaExterna(tf,Fs)
+%FALHAPISTAEXTERNA Vibracao de rolamento com falha na pista externa.
+% Calcula a vibracao em um rolamento com dano pontual na pista externa,
+% podendo ajustar a duracao da simulacao e a frequencia de amostragem.
 
 %% Entrada de dados
+anelExt = struct;
+anelInt = struct;
 GerarDadosEntrada;
 
 %% Propriedades derivadas do rolamento
@@ -17,7 +22,7 @@ anelInt.omega = N*pi/30;
 anelExt.omega = 0;
 
 % Ball Pass Frequency, Outer
-BPFO = Nb/2*(anelInt.omega-anelExt.omega)*(1-cos(alpha)*Db/Dp);
+BPFO = Nb/2*(anelInt.omega-anelExt.omega)*(1-cos(angContato)*Db/Dp);
 
 % Frequencias naturais - aneis externo e interno
 % Segundo modo de vibracao do anel considerado
@@ -101,9 +106,6 @@ for i=1:3
     resultados(i).acc = [diff(resultados(i).vel)./Ts; 0]; 
 end
 
-ext = resultados(1);
-esf = resultados(2);
-int = resultados(3);
+FImp = fImpacto(t);
 
-%% Exibicao dos resultados
-ExibirResultados;
+end
