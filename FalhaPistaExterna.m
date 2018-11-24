@@ -1,4 +1,4 @@
-function [ext, esf, int, FImp, t] = FalhaPistaExterna(tf,Fs)
+function [resultados, FImp, t] = FalhaPistaExterna(tf,Fs)
 % Calcula a vibracao em um rolamento com dano pontual na pista externa.
 
 %% Entrada de dados
@@ -104,9 +104,6 @@ for i=1:3
     resultados(i).acc = [diff(resultados(i).vel)./Ts; 0]; 
 end
 
-ext = resultados(1);
-esf = resultados(2);
-int = resultados(3);
 FImp = fImpacto(t);
 
 end
