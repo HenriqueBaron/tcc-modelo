@@ -1,2 +1,5 @@
 ## MATLAB autosave files
 *.asv
+
+# MATLAB app installer files
+*.mlappinstall
