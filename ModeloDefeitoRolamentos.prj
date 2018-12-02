@@ -32,14 +32,14 @@
     <fileset.depfun>
       <file>${PROJECT_ROOT}\DeformacaoElastica.m</file>
       <file>${PROJECT_ROOT}\EspessuraFilmeLub.m</file>
-      <file>${PROJECT_ROOT}\ExibirPlotTriplo.m</file>
-      <file>${PROJECT_ROOT}\ExibirPlotUnico.m</file>
       <file>${PROJECT_ROOT}\FalhaPistaExterna.m</file>
       <file>${PROJECT_ROOT}\GerarDadosEntrada.m</file>
       <file>${PROJECT_ROOT}\ImpulsosTriangulo.m</file>
       <file>${PROJECT_ROOT}\ObterCargaMaximaEsfera.m</file>
       <file>${PROJECT_ROOT}\ParametrosElipseContato.m</file>
       <file>${PROJECT_ROOT}\RaiosCurvatura.m</file>
+      <file>${PROJECT_ROOT}\Resultados\ExibirPlotTriplo.m</file>
+      <file>${PROJECT_ROOT}\Resultados\ExibirPlotUnico.m</file>
       <file>${PROJECT_ROOT}\SisNaoLinOrdem2.m</file>
     </fileset.depfun>
     <fileset.resources />
