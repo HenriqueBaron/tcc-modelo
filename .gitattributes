@@ -1,6 +1,6 @@
-*.mlx -crlf -diff -merge
-*.mat -crlf -diff -merge
-*fig -crlf -diff -merge
-*.p -crlf -diff -merge
-*.slx -crlf -diff -merge
-*.mdl -crlf -diff -merge
+*.mlx diff=mldiff merge=mlmerge
+*.mat diff=mldiff merge=mlmerge
+*.fig diff=mldiff merge=mlmerge
+*.p diff=mldiff merge=mlmerge
+*.slx diff=mldiff merge=mlmerge
+*.mdl diff=mldiff merge=mlmerge

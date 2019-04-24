@@ -4,8 +4,5 @@
 # MATLAB figures
 *.fig
 
-# MATLAB workspaces
-*.mat
-
 # MATLAB app installer files
 *.mlappinstall
