@@ -7,13 +7,13 @@ classdef RolamentoEsferas
         AnelExt
         AnelInt
         AnguloContato
-        DiamEsferas
+        FolgaRadial
         NumEsferas
         MassaEsfera
     end
     
     methods
-        function obj = RolamentoEsferas(anelExt,anelInt,diamEsf,numEsf,...
+        function obj = RolamentoEsferas(anelExt,anelInt,folgaRad,numEsf,...
                 massaEsf)
             %ROLAMENTOESFERAS Construct an instance of this class
             %   Constroi uma instancia do rolamento de esferas, com todas
@@ -30,9 +30,26 @@ classdef RolamentoEsferas
             obj.AnelExt = anelExt;
             obj.AnelInt = anelInt;
             obj.AnguloContato = 0;
+            obj.FolgaRadial = folgaRad;
             obj.DiamEsferas = diamEsf;
             obj.NumEsferas = numEsf;
             obj.MassaEsfera = massaEsf;
+        end
+        
+        function cd = GetFolgaDiametral(obj)
+            %GETFOLGADIAMETRAO Retorna a folga diametral do rolamento
+            cd = 2*obj.FolgaRadial;
+        end
+        
+        function Dp = GetPitchDiameter(obj)
+            %GETPITCHDIAMETER Retorna o Pitch Diameter do rolamento
+            Dp = (obj.AnelExt.D + obj.AnelInt.D)/2;
+        end
+        
+        function rb = GetRaioEsferas(obj)
+            %GETRAIOESFERAS Retorna o raio calculado das esferas
+            rb = (obj.AnelExt.D2 - obj.AnelInt.D2 - ...
+                obj.GetFolgaDiametral)/4;
         end
         
     end
