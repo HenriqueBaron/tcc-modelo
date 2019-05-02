@@ -1,24 +1,40 @@
 classdef RolamentoEsferas
     %ROLAMENTO Define um rolamento de esferas e suas propriedades
-    %   Define as propriedades mecânicas de um rolamento de esferas e o
-    %   cálculo de propriedades dinâmicas.
+    %   Define as propriedades mecanicas de um rolamento de esferas e o
+    %   calculo de propriedades dinamicas.
     
     properties
-        Property1
+        AnelExt
+        AnelInt
+        AnguloContato
+        DiamEsferas
+        NumEsferas
+        MassaEsfera
     end
     
     methods
-        function obj = untitled(inputArg1,inputArg2)
-            %UNTITLED Construct an instance of this class
-            %   Detailed explanation goes here
-            obj.Property1 = inputArg1 + inputArg2;
+        function obj = RolamentoEsferas(anelExt,anelInt,diamEsf,numEsf,...
+                massaEsf)
+            %ROLAMENTOESFERAS Construct an instance of this class
+            %   Constroi uma instancia do rolamento de esferas, com todas
+            %   as suas propriedades
+            classeEsperadaAneis = 'AnelRolamentoEsferas';
+            if ~isa(anelExt,classeEsperadaAneis)
+                error(['O argumento "anelExt" deve ser um objeto da ' ...
+                    'classe ' classeEsperadaAneis]);
+            end
+            if ~isa(anelInt,classeEsperadaAneis)
+                error(['O argumento "anelInt" deve ser um objeto da ' ...
+                    'classe ' classeEsperadaAneis]);
+            end
+            obj.AnelExt = anelExt;
+            obj.AnelInt = anelInt;
+            obj.AnguloContato = 0;
+            obj.DiamEsferas = diamEsf;
+            obj.NumEsferas = numEsf;
+            obj.MassaEsfera = massaEsf;
         end
         
-        function outputArg = method1(obj,inputArg)
-            %METHOD1 Summary of this method goes here
-            %   Detailed explanation goes here
-            outputArg = obj.Property1 + inputArg;
-        end
     end
 end
 
